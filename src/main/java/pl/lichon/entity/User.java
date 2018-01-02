@@ -18,7 +18,7 @@ public class User {
 	
 	private String password;
 	
-	private String mail;
+	private String email;
 
 	public User() {
 		super();
@@ -52,13 +52,15 @@ public class User {
 		return BCrypt.checkpw(pwd, this.password);
 	}
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+
 	
 	
 }
