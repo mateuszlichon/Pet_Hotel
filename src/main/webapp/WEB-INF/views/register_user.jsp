@@ -8,16 +8,9 @@
 <title>Login/register page</title>
 </head>
 <body>
-<h5>Please log in and let's find your pet a home:</h5>
-<form:form method="post" modelAttribute="loginData">
-	<p>Email<form:input path="email" /></p>
-	<p>Password<form:password path="password" /></p>
-	<p><input type="submit" /></p>
-	<form:errors></form:errors>
-</form:form>
-<br />
+<%@ include file = "jspf/main_menu.jspf" %>
 <h5>New to the site? Register here:</h5>
-<form:form method="post" modelAttribute="user">
+<form:form action="register" method="post" modelAttribute="user">
 	<p>User Name<form:input path="name" /><form:errors path="name"></form:errors></p>
 	<p>Email<form:input path="email" /><form:errors path="email"></form:errors></p>
 	<p>Password<form:password path="password" /><form:errors path="password"></form:errors></p>

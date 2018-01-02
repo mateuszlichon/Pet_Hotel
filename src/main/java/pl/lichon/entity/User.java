@@ -1,10 +1,12 @@
 package pl.lichon.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
@@ -14,10 +16,13 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	@NotEmpty
 	private String name;
 	
 	private String password;
 	
+	@NotEmpty
+	@Column(unique = true)
 	private String email;
 
 	public User() {
@@ -45,7 +50,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = BCrypt.hashpw(password, this.password);
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 	
 	public boolean isPasswordCorrect(String pwd) {

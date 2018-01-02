@@ -6,4 +6,5 @@ import pl.lichon.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+	User findOneByEmail(String email);
 }
