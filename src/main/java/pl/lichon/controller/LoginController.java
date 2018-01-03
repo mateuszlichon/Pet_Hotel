@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import pl.lichon.bean.LoginData;
 import pl.lichon.bean.SessionManager;
+import pl.lichon.entity.Hotel;
 import pl.lichon.entity.User;
+import pl.lichon.repository.HotelRepository;
 import pl.lichon.repository.UserRepository;
 
 @Controller
@@ -22,6 +24,10 @@ public class LoginController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private HotelRepository hotelRepository;
+	
+	// user section
 	@GetMapping("/login")
 	public String loginUser(Model m) {
 		m.addAttribute("loginData", new LoginData());
@@ -53,6 +59,40 @@ public class LoginController {
 			}
 			m.addAttribute("msg", "Enter valid data");
 			return "login/login_user";
+	}
+	
+	// hotel section
+	@GetMapping("/loginHotel")
+	public String loginHotel(Model m) {
+		m.addAttribute("loginData", new LoginData());
+		return "login/login_hotel";
+	}
+	
+	@GetMapping("/registerHotel")
+	public String registerHotel(Model m) {
+		m.addAttribute("hotel", new Hotel());
+		return "login/register_hotel";
+	}
+	
+	@PostMapping("/registerHotel")
+	public String registerHotelPost(@Valid @ModelAttribute Hotel hotel, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "login/register_hotel";
+		}
+		this.hotelRepository.save(hotel);
+		return "redirect:/";
+	}
+	
+	@PostMapping("/loginHotel")
+	public String loginHotelPost(@Valid @ModelAttribute LoginData loginData, Model m, BindingResult bindingResult) {
+		Hotel h = this.hotelRepository.findOneByEmail(loginData.getEmail());
+			if (h != null && h.isPasswordCorrect(loginData.getEmail())) {
+				HttpSession s = SessionManager.session();
+				s.setAttribute("hotel", h);
+				return "login/login_hotel";
+			}
+			m.addAttribute("msg", "Enter valid data");
+			return "login/login_hotel";
 	}
 	
 	@GetMapping("/logout")

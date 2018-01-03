@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 public class Hotel {
@@ -61,7 +62,11 @@ public class Hotel {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+	}
+	
+	public boolean isPasswordCorrect(String pwd) {
+		return BCrypt.checkpw(pwd, this.password);
 	}
 
 	public String getEmail() {
