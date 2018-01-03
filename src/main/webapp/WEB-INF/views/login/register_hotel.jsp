@@ -10,10 +10,14 @@
 <body>
 <%@ include file = "../jspf/main_menu.jspf" %>
 <h5>New to the site? Register here:</h5>
-<form:form action="register" method="post" modelAttribute="user">
+<form:form action="registerHotel" method="post" modelAttribute="hotel">
 	<p>User Name<form:input path="name" /><form:errors path="name"></form:errors></p>
 	<p>Email<form:input path="email" /><form:errors path="email"></form:errors></p>
 	<p>Password<form:password path="password" /><form:errors path="password"></form:errors></p>
+	<p>Description<form:input path="description" /><form:errors path="description"></form:errors></p>
+	<p>Requirements<form:input path="requirements" /><form:errors path="requirements"></form:errors></p>
+	<p>City<form:input path="addressCity" /><form:errors path="addressCity"></form:errors></p>
+	<p>Street<form:input path="addressStreet" /><form:errors path="addressStreet"></form:errors></p>
 <p><input type="submit" /></p>
 </form:form>
 </body>

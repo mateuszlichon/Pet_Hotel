@@ -7,14 +7,21 @@
 
 <c:choose>
 
-	<c:when test="${sessionScope.user == null}">
-		<a href="/Pet_Hotel/register">User Register</a>
-		<a href="/Pet_Hotel/login">User Login</a>
+	<c:when test="${sessionScope.user != null}">
+		Welcome ${sessionScope.user.name}
+		<a href="/Pet_Hotel/logout">Logout</a>
+	</c:when>
+	
+	<c:when test="${sessionScope.hotel != null}">
+		Welcome ${sessionScope.hotel.name}
+		<a href="/Pet_Hotel/logout">Logout</a>
 	</c:when>
 
 	<c:otherwise>
-		Welcome ${sessionScope.user.name}
-		<a href="/Pet_Hotel/logout">Logout</a>
+		<a href="/Pet_Hotel/register">User Register</a>
+		<a href="/Pet_Hotel/login">User Login</a>
+		<a href="/Pet_Hotel/registerHotel">Hotel Register</a>
+		<a href="/Pet_Hotel/loginHotel">Hotel Login</a>
 	</c:otherwise>
 	
 </c:choose>
