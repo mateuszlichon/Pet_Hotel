@@ -13,6 +13,7 @@
 	</c:when>
 
 	<c:otherwise>
+		Welcome ${sessionScope.user.name}
 		<a href="/Pet_Hotel/logout">Logout</a>
 	</c:otherwise>
 	

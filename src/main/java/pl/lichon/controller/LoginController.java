@@ -25,19 +25,19 @@ public class LoginController {
 	@GetMapping("/login")
 	public String loginUser(Model m) {
 		m.addAttribute("loginData", new LoginData());
-		return "login_user";
+		return "login/login_user";
 	}
 	
 	@GetMapping("/register")
 	public String registerUser(Model m) {
 		m.addAttribute("user", new User());
-		return "register_user";
+		return "login/register_user";
 	}
 	
 	@PostMapping("/register")
 	public String registerPost(@Valid @ModelAttribute User user, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "register_user";
+			return "login/register_user";
 		}
 		this.userRepository.save(user);
 		return "redirect:/";
@@ -49,16 +49,16 @@ public class LoginController {
 			if (u != null && u.isPasswordCorrect(loginData.getEmail())) {
 				HttpSession s = SessionManager.session();
 				s.setAttribute("user", u);
-				return "login_user";
+				return "login/login_user";
 			}
 			m.addAttribute("msg", "Enter valid data");
-			return "login_user";
+			return "login/login_user";
 	}
 	
 	@GetMapping("/logout")
 	public String logout(Model m) {
 		HttpSession s = SessionManager.session();
 		s.invalidate();
-		return "login_user";
+		return "redirect:/";
 	}
 }
