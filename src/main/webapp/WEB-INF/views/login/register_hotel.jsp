@@ -8,7 +8,7 @@
 <title>Login/register page</title>
 </head>
 <body>
-<%@ include file = "jspf/main_menu.jspf" %>
+<%@ include file = "../jspf/main_menu.jspf" %>
 <h5>New to the site? Register here:</h5>
 <form:form action="register" method="post" modelAttribute="user">
 	<p>User Name<form:input path="name" /><form:errors path="name"></form:errors></p>

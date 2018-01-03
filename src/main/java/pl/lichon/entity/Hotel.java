@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
-public class User {
+public class Hotel {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,8 +26,18 @@ public class User {
 	@Email
 	@Column(unique = true)
 	private String email;
+	
+	private String description;
+	
+	private String requirements;
+	
+	@NotEmpty
+	private String addressCity;
+	
+	@NotEmpty
+	private String addressStreet;
 
-	public User() {
+	public Hotel() {
 		super();
 	}
 
@@ -67,7 +77,37 @@ public class User {
 		this.email = email;
 	}
 
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(String requirements) {
+		this.requirements = requirements;
+	}
+
+	public String getAddressCity() {
+		return addressCity;
+	}
+
+	public void setAddressCity(String addressCity) {
+		this.addressCity = addressCity;
+	}
+
+	public String getAddressStreet() {
+		return addressStreet;
+	}
+
+	public void setAddressStreet(String addressStreet) {
+		this.addressStreet = addressStreet;
+	}
 	
 	
 }
