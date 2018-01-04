@@ -9,7 +9,7 @@
 </head>
 <body>
 <%@ include file = "../jspf/main_menu.jspf" %>
-<h5>New to the site? Register here:</h5>
+<h5>Register hotel:</h5>
 <form:form action="registerHotel" method="post" modelAttribute="hotel">
 	<p>User Name<form:input path="name" /><form:errors path="name"></form:errors></p>
 	<p>Email<form:input path="email" /><form:errors path="email"></form:errors></p>
