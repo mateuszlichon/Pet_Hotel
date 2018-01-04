@@ -16,7 +16,7 @@ public class HomeController {
 	@Autowired
 	private HotelRepository hotelRepository;
 	
-	@GetMapping("home")
+	@GetMapping("")
 	public String home() {
 		return "home";
 	}
