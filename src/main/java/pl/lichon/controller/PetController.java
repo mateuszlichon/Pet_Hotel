@@ -1,5 +1,7 @@
 package pl.lichon.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -23,16 +25,16 @@ public class PetController {
 
 	@Autowired
 	private PetRepository petRepository;
-	
+
 	@GetMapping("/register")
 	public String registerPer(Model m) {
 		m.addAttribute("pet", new Pet());
 		return "pet/register_pet";
 	}
-	
+
 	@PostMapping("/register")
 	public String registerPost(@Valid @ModelAttribute Pet pet, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			return "pet/register_pet";
 		}
 		HttpSession s = SessionManager.session();
@@ -41,4 +43,17 @@ public class PetController {
 		this.petRepository.save(pet);
 		return "redirect:/";
 	}
+
+	@GetMapping("/show")
+	public String showPets(@ModelAttribute Pet pet) {
+		return "pet/show_pet";
+	}
+
+	@ModelAttribute("userPets")
+	public List<Pet> getUserPets() {
+		HttpSession s = SessionManager.session();
+		User user = (User) s.getAttribute("user");
+		return this.petRepository.findByUserId(user.getId());
+	}
+
 }

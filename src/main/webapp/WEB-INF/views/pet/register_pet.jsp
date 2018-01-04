@@ -18,6 +18,9 @@
 	<p>Diet<form:textarea path="diet" /><form:errors path="diet"></form:errors></p>
 	<p>Description<form:textarea path="description" /><form:errors path="description"></form:errors></p>
 	<p>Additional requirements<form:textarea path="requirements" /><form:errors path="requirements"></form:errors></p>
+	<p>Vaccinated</p>
+	Yes: <form:radiobutton path="vaccinated" value="true"/>
+	No: <form:radiobutton path="vaccinated" value="false"/>
 <p><input type="submit" /></p>
 </form:form>
 </body>
