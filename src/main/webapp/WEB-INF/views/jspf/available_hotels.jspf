@@ -17,7 +17,7 @@
 			<td>${hotel.name}</td>
 			<td>${hotel.addressCity}</td>
 			<td>${hotel.description}</td>
-			<td><a href="hotel/${hotel.id}">details</a></td>
+			<td><a href="hotel/view/${hotel.id}">details</a></td>
 		</tr>
 	</c:forEach>
 
