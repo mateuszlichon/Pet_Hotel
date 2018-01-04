@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -30,6 +31,9 @@ public class Pet {
 	private String requirements;
 	
 	private boolean vaccinated;
+	
+	@ManyToOne
+	private User user;
 
 	public Pet() {
 		super();
@@ -106,6 +110,15 @@ public class Pet {
 	public void setVaccinated(boolean vaccinated) {
 		this.vaccinated = vaccinated;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	
 	
 }
