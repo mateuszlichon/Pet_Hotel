@@ -24,6 +24,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import pl.lichon.conventer.HotelConverter;
 import pl.lichon.conventer.PetConverter;
 
 
@@ -69,11 +70,17 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(petConverter());
+		registry.addConverter(hotelConverter());
 	}
 
 	@Bean
 	public PetConverter petConverter() {
 		return new PetConverter();
+	}
+	
+	@Bean
+	public HotelConverter hotelConverter() {
+		return new HotelConverter();
 	}
 	
 	@Bean(name = "localeResolver")
