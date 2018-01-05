@@ -45,7 +45,15 @@ public class PetController {
 	}
 
 	@GetMapping("/show")
-	public String showPets(@ModelAttribute Pet pet) {
+	public String showPets(@ModelAttribute Pet pet, Model m) {
+		m.addAttribute("pet1", new Pet());
+		return "pet/show_pet";
+	}
+	
+	@PostMapping("/show")
+	public String showPetsPost(@ModelAttribute Pet pet, @ModelAttribute Pet pet1, Model m) {
+		pet1 = this.petRepository.findOne(pet1.getId());
+		m.addAttribute("pet1", pet1);
 		return "pet/show_pet";
 	}
 

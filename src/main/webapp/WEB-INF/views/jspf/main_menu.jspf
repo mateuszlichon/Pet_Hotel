@@ -11,6 +11,7 @@
 		Welcome ${sessionScope.user.name}<BR />
 		<a href="/Pet_Hotel">Main page</a>
 		<a href="/Pet_Hotel/pet/register">Create pet profile</a>
+		<a href="/Pet_Hotel/pet/show">Display pet profile</a>
 		<a href="/Pet_Hotel/logout">Logout</a>
 	</c:when>
 	
