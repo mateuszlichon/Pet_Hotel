@@ -21,8 +21,4 @@ public class HomeController {
 		return "home";
 	}
 	
-	@ModelAttribute("availableHotels")
-	public List<Hotel> getHotels() {
-		return this.hotelRepository.findAll();
-	}
 }
