@@ -12,14 +12,20 @@
 	<%@ include file="jspf/main_menu.jspf"%>
 	<h2>Welcome to Pet Hotel!</h2>
 	<form method="post">
-		Filter hotels by cities
-		<form:select path="hotel1.addressCity" items="${availableHotels}"
+		Filter hotels by cities <select name="city">
+			<c:forEach var="city" items="${citiesList}">
+				<option value="${city}">${city}</option>
+			</c:forEach>
+		</select>
+
+		<%-- 		<form:select path="hotel1.addressCity" items="${availableHotels}"
 			itemValue="addressCity" label="please select" itemLabel="addressCity"></form:select>
+ --%>
 		<input type="submit" />
 	</form>
 
 	<c:choose>
-		<c:when test="${hotel1.addressCity == null}">
+		<c:when test="${cityHotels == null}">
 			<%@ include file="jspf/available_hotels.jspf"%>
 		</c:when>
 		<c:otherwise>
