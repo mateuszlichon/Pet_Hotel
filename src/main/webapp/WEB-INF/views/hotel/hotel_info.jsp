@@ -9,6 +9,30 @@
 </head>
 <body>
 <%@ include file = "../jspf/main_menu.jspf" %>
-${hotel.name}
+
+			<table>
+				<tr>
+					<th>Name</th>
+					<td>${hotel.name}</td>
+				</tr>
+				<tr>
+					<th>description</th>
+					<td>${hotel.description}</td>
+				</tr>
+				<tr>
+					<th>requirements</th>
+					<td>${hotel.requirements}</td>
+				</tr>
+				<tr>
+					<th>addressCity</th>
+					<td>${hotel.addressCity}</td>
+				</tr>
+				<tr>
+					<th>addressStreet</th>
+					<td>${hotel.addressStreet}</td>
+				</tr>
+
+			</table>
+
 </body>
 </html>
