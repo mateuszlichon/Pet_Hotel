@@ -9,24 +9,24 @@
 
 	<c:when test="${sessionScope.user != null}">
 		Welcome ${sessionScope.user.name}<BR />
-		<a href="/Pet_Hotel">Main page</a>
-		<a href="/Pet_Hotel/pet/register">Create pet profile</a>
-		<a href="/Pet_Hotel/pet/show">Display pet profile</a>
-		<a href="/Pet_Hotel/logout">Logout</a>
+		<a href="/Pet_Hotel"><button type="button" class="btn btn-primary">Main page</button></a>
+		<a href="/Pet_Hotel/pet/register"><button type="button" class="btn btn-primary">Create pet profile</button></a>
+		<a href="/Pet_Hotel/pet/show"><button type="button" class="btn btn-primary">Display pet profile</button></a>
+		<a href="/Pet_Hotel/logout"><button type="button" class="btn btn-primary">Logout</button></a>
 	</c:when>
 	
 	<c:when test="${sessionScope.hotel != null}">
 		Welcome ${sessionScope.hotel.name}<BR />
-		<a href="/Pet_Hotel">Main page</a>
-		<a href="/Pet_Hotel/logout">Logout</a>
+		<a href="/Pet_Hotel"><button type="button" class="btn btn-primary">Main page</button></a>
+		<a href="/Pet_Hotel/logout"><button type="button" class="btn btn-primary">Logout</button></a>
 	</c:when>
 
 	<c:otherwise>
-		<a href="/Pet_Hotel">Main page</a>
-		<a href="/Pet_Hotel/register">User Register</a>
-		<a href="/Pet_Hotel/login">User Login</a>
-		<a href="/Pet_Hotel/registerHotel">Hotel Register</a>
-		<a href="/Pet_Hotel/loginHotel">Hotel Login</a>
+		<a href="/Pet_Hotel"><button type="button" class="btn btn-primary">Main page</button></a>
+		<a href="/Pet_Hotel/register"><button type="button" class="btn btn-primary">User Register</button></a>
+		<a href="/Pet_Hotel/login"><button type="button" class="btn btn-primary">User Login</button></a>
+		<a href="/Pet_Hotel/registerHotel"><button type="button" class="btn btn-primary">Hotel Register</button></a>
+		<a href="/Pet_Hotel/loginHotel"><button type="button" class="btn btn-primary">Hotel Login</button></a>
 	</c:otherwise>
 	
 </c:choose>
