@@ -1,8 +1,12 @@
 package pl.lichon.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
 import pl.lichon.entity.Pet;
 import pl.lichon.entity.Reservation;
@@ -59,6 +64,8 @@ public class ReservationDateController {
 		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, 1);
 		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, 2);
 		Hotel hotel = this.hotelRepository.findOne(hotelId);
+		HttpSession s = SessionManager.session();
+		s.setAttribute("chosenHotel", hotel);
 		m.addAttribute("hotel", hotel);
 		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);
@@ -66,11 +73,57 @@ public class ReservationDateController {
 		return "reservation/hotel_reservation_date";
 	}
 
-	@GetMapping("/{hotelId}/newHotelReservation/{dateId}/pet")
-	public String newHotelReservationDate(Model m, @PathVariable long hotelId, @PathVariable long dateId) {
-		m.addAttribute("newPet", new Pet());
-		return "reservation/hotel_pet_reservation_date";
+	@GetMapping("/{dateId}/date")
+	public String newHotelReservationDate(Model m, @PathVariable long dateId) {
+		HttpSession s = SessionManager.session();
+		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> chosenDate = (List<ReservationDate>) s.getAttribute("chosenDate");
+		if(chosenDate == null) {
+			chosenDate = new ArrayList<>();
+		}
+		ReservationDate rs = this.reservationDateRepository.findOne(dateId);
+		//making sure there are no repetitions
+		for (ReservationDate reservationDate : chosenDate) {
+			if(reservationDate.getId() == rs.getId()) {
+				chosenDate.remove(rs);
+				s.setAttribute("chosenDate", chosenDate);
+				m.addAttribute("hotel", hotel);
+				m.addAttribute("datesJanuary", datesJanuary);
+				m.addAttribute("datesFebruary", datesFebruary);
+				m.addAttribute("reservation", new ReservationDate());
+				return "reservation/hotel_reservation_date";
+			}
+		}
+		chosenDate.add(rs);
+		s.setAttribute("chosenDate", chosenDate);
+		m.addAttribute("hotel", hotel);
+		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);
+		m.addAttribute("reservation", new ReservationDate());
+		return "reservation/hotel_reservation_date";
 	}
+	
+	@GetMapping("/clear")
+	public String clearDates(Model m) {
+		HttpSession s = SessionManager.session();
+		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> chosenDate = (List<ReservationDate>) s.getAttribute("chosenDate");
+		if(chosenDate == null) {
+			chosenDate = new ArrayList<>();
+		}
+		chosenDate.clear();
+		s.setAttribute("chosenDate", chosenDate);
+		m.addAttribute("hotel", hotel);
+		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);
+		m.addAttribute("reservation", new ReservationDate());
+		return "reservation/hotel_reservation_date";
+	}
+	
 	
 	@GetMapping("/{hotelId}/newHotelReservation/{dateId}/pet/{petId}")
 	public String newReservation(Model m, @PathVariable long hotelId, @PathVariable long dateId, @PathVariable long petId, @ModelAttribute Pet newPet) {

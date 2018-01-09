@@ -12,16 +12,17 @@
 </head>
 <body>
 <%@ include file = "../jspf/main_menu.jspf" %>
+<%@ include file = "../jspf/reservation_progress.jspf" %>
 <h5>Register hotel ${hotel.name}:</h5>
 January:<br>
 <c:forEach items="${datesJanuary}" var="date">
 <c:choose>
 	<c:when test="${date.placesLeft > 3}">
-		<a href="newHotelReservation/${date.id}/pet"><button type="button" class="btn btn-success">${date.day}</button></a>
+		<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button type="button" class="btn btn-success">${date.day}</button></a>
 	</c:when>
 
 	<c:otherwise>
-		<a href="newHotelReservation/${date.id}/pet"><button type="button" class="btn btn-danger">${date.day}</button></a>
+		<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button type="button" class="btn btn-danger">${date.day}</button></a>
 	</c:otherwise>
 </c:choose>
 </c:forEach>
@@ -30,11 +31,11 @@ February:<br>
 <c:forEach items="${datesFebruary}" var="date">
 <c:choose>
 	<c:when test="${date.placesLeft > 3}">
-		<a href="newHotelReservation/${date.id}/pet"><button type="button" class="btn btn-success">${date.day}</button></a>
+		<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button type="button" class="btn btn-success">${date.day}</button></a>
 	</c:when>
 
 	<c:otherwise>
-		<a href="newHotelReservation/${date.id}/pet"><button type="button" class="btn btn-danger">${date.day}</button></a>
+		<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button type="button" class="btn btn-danger">${date.day}</button></a>
 	</c:otherwise>
 </c:choose>
 </c:forEach>
