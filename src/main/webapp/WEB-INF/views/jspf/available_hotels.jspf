@@ -10,7 +10,7 @@
 			<th>Name</th>
 			<th>City</th>
 			<th>Description</th>
-			<th>actions</th>
+			<th colspan="2">actions</th>
 		</tr>
 	</thead>
 
@@ -19,7 +19,8 @@
 			<td>${hotel.name}</td>
 			<td>${hotel.addressCity}</td>
 			<td>${hotel.description}</td>
-			<td><a href="hotel/view/${hotel.id}">details</a></td>
+			<td><a href="hotel/view/${hotel.id}"><button type="button" class="btn btn-info">Details</button></a></td>
+			<td><a href="hotel/view/${hotel.id}"><button type="button" class="btn btn-warning">Make reservation</button></a></td>
 		</tr>
 	</c:forEach>
 

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -36,6 +37,9 @@ public class Hotel {
 	
 	@NotEmpty
 	private String addressStreet;
+	
+	@ManyToOne
+	private ReservationCallendar reservationCallendar;
 
 	public Hotel() {
 		super();

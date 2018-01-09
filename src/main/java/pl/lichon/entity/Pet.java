@@ -34,6 +34,9 @@ public class Pet {
 	
 	@ManyToOne
 	private User user;
+	
+	@ManyToOne
+	private ReservationCallendar reservationCallendar;
 
 	public Pet() {
 		super();

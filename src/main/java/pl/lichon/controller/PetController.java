@@ -63,5 +63,12 @@ public class PetController {
 		User user = (User) s.getAttribute("user");
 		return this.petRepository.findByUserId(user.getId());
 	}
+	
+	@ModelAttribute("logedUser")
+	public User getLogedUser() {
+		HttpSession s = SessionManager.session();
+		User user = (User) s.getAttribute("user");
+		return user;
+	}
 
 }
