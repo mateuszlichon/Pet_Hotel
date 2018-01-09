@@ -14,6 +14,7 @@
 <form:form action="registerHotel" method="post" modelAttribute="hotel">
 	<p>User Name<form:input path="name" /><form:errors path="name"></form:errors></p>
 	<p>Email<form:input path="email" /><form:errors path="email"></form:errors></p>
+	<p>Capacity <input type="number" name="capacity"></p>
 	<p>Password<form:password path="password" /><form:errors path="password"></form:errors></p>
 	<p>Description<form:input path="description" /><form:errors path="description"></form:errors></p>
 	<p>Requirements<form:input path="requirements" /><form:errors path="requirements"></form:errors></p>

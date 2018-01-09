@@ -10,10 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class ReservationCallendar {
+public class Reservation {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -21,15 +23,15 @@ public class ReservationCallendar {
 	
 	private Date date;
 
-	@OneToMany(mappedBy = "reservationCallendar")
-	private List<Hotel> hotel = new ArrayList<>();
+	@ManyToOne
+	private Hotel hotel;
 	
-	private int placesLeft;
+	private int placesLeft = -1;
 	
-	@OneToMany(mappedBy = "reservationCallendar")
+	@ManyToMany
 	private List<Pet> pet = new ArrayList<>();
 
-	public ReservationCallendar() {
+	public Reservation() {
 		super();
 	}
 
@@ -49,13 +51,6 @@ public class ReservationCallendar {
 		this.date = date;
 	}
 
-	public List<Hotel> getHotel() {
-		return hotel;
-	}
-
-	public void setHotel(List<Hotel> hotel) {
-		this.hotel = hotel;
-	}
 
 	public int getPlacesLeft() {
 		return placesLeft;
@@ -71,6 +66,14 @@ public class ReservationCallendar {
 
 	public void setPet(List<Pet> pet) {
 		this.pet = pet;
+	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	

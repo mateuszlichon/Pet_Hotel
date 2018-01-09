@@ -71,7 +71,7 @@
 						</tr>
 
 					</table>
-
+<td><a href="/Pet_Hotel/reservation/newPetReservation"><button type="button" class="btn btn-warning">Make reservation</button></a></td>
 				</c:otherwise>
 
 			</c:choose>

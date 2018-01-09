@@ -1,11 +1,15 @@
 package pl.lichon.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -28,6 +32,8 @@ public class Hotel {
 	@Column(unique = true)
 	private String email;
 	
+	private int capacity;
+	
 	private String description;
 	
 	private String requirements;
@@ -38,8 +44,8 @@ public class Hotel {
 	@NotEmpty
 	private String addressStreet;
 	
-	@ManyToOne
-	private ReservationCallendar reservationCallendar;
+	@OneToMany(mappedBy = "hotel")
+	private List<Reservation> reservation = new ArrayList<>();
 
 	public Hotel() {
 		super();
@@ -111,6 +117,22 @@ public class Hotel {
 
 	public void setAddressStreet(String addressStreet) {
 		this.addressStreet = addressStreet;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public List<Reservation> getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(List<Reservation> reservation) {
+		this.reservation = reservation;
 	}
 	
 	

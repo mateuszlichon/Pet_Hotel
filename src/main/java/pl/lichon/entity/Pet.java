@@ -1,9 +1,13 @@
 package pl.lichon.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -35,8 +39,8 @@ public class Pet {
 	@ManyToOne
 	private User user;
 	
-	@ManyToOne
-	private ReservationCallendar reservationCallendar;
+	@ManyToMany
+	private List<Reservation> reservation = new ArrayList<>();
 
 	public Pet() {
 		super();
@@ -125,6 +129,14 @@ public class Pet {
 	@Override
 	public String toString() {
 		return name + ", " + category;
+	}
+
+	public List<Reservation> getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(List<Reservation> reservation) {
+		this.reservation = reservation;
 	}
 	
 	
