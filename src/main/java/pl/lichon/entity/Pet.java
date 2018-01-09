@@ -40,7 +40,7 @@ public class Pet {
 	private User user;
 	
 	@ManyToMany
-	private List<Reservation> reservation = new ArrayList<>();
+	private List<ReservationDate> reservationDate = new ArrayList<>();
 
 	public Pet() {
 		super();
@@ -131,12 +131,12 @@ public class Pet {
 		return name + ", " + category;
 	}
 
-	public List<Reservation> getReservation() {
-		return reservation;
+	public List<ReservationDate> getReservationDate() {
+		return reservationDate;
 	}
 
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
+	public void setReservationDate(List<ReservationDate> reservationDate) {
+		this.reservationDate = reservationDate;
 	}
 	
 	

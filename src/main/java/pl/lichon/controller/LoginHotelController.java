@@ -15,13 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.lichon.bean.LoginData;
 import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
+import pl.lichon.entity.ReservationDate;
 import pl.lichon.repository.HotelRepository;
+import pl.lichon.repository.ReservationDateRepository;
 
 @Controller
 public class LoginHotelController {
 
 	@Autowired
 	private HotelRepository hotelRepository;
+	
+	@Autowired
+	private ReservationDateRepository reservationDateRepository;
 	
 	// hotel section
 	@GetMapping("/loginHotel")
@@ -42,6 +47,16 @@ public class LoginHotelController {
 			return "login/register_hotel";
 		}
 		this.hotelRepository.save(hotel);
+		//January
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, (i%7), 1, 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
+		//February
+		for (int i = 1; i <= 28; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+3)%7), 2, 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
 		return "redirect:/";
 	}
 	
