@@ -34,7 +34,9 @@
 <tr>
 <c:choose>
 	<c:when test="${sessionScope.chosenHotel != null}">
-		<td>${sessionScope.chosenHotel.name}</td>
+		<td>${sessionScope.chosenHotel.name}<BR />
+		<a href="/Pet_Hotel/reservationDate/hotel/clear"><button type="button" class="btn btn-danger">clear hotel</button></a>
+		</td>
 	</c:when>
 </c:choose>
 <c:choose>
@@ -56,13 +58,22 @@
 
 <c:choose>
 	<c:when test="${sessionScope.chosenPet != null}">
-		<td>${sessionScope.chosenPet.name}</td>
+		<td>${sessionScope.chosenPet.name}<BR />
+		<a href="/Pet_Hotel/reservationDate/pet/clear"><button type="button" class="btn btn-danger">clear pet</button></a>
+		</td>
 	</c:when>
 	<c:otherwise>
 		<td><c:forEach items="${sessionScope.user.pet}" var="pet">
-			${pet.name}
-		</c:forEach></td>
+			<a href="/Pet_Hotel/reservationDate/${pet.id}/pet"><button type="button" class="btn btn-primary">${pet.name}</button></a><BR />
+			
+		</c:forEach>
+		</td>
 	</c:otherwise>	
+</c:choose>
+<c:choose>
+	<c:when test="${(sessionScope.chosenPet != null) and (sessionScope.chosenDate != null) and (sessionScope.chosenHotel != null)}">
+	<tr><td colspan="3"><a href="/Pet_Hotel/reservationDate/confirm"><button type="button" class="btn btn-primary">Confirm reservation :)</button></a></td></tr>
+	</c:when>
 </c:choose>
 </tr>
 </table>
