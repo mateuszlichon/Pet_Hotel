@@ -72,6 +72,7 @@ public class HotelController {
 		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
 		ReservationDate hotelDate = this.reservationDateRepository.findOne(dateId);
 		hotelDate.setPlacesLeft(hotelDate.getPlacesLeft()+1);
+		this.reservationDateRepository.save(hotelDate);
 		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);
 		m.addAttribute("hotelDate", hotelDate);
@@ -86,6 +87,7 @@ public class HotelController {
 		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
 		ReservationDate hotelDate = this.reservationDateRepository.findOne(dateId);
 		hotelDate.setPlacesLeft(hotelDate.getPlacesLeft()-1);
+		this.reservationDateRepository.save(hotelDate);
 		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);
 		m.addAttribute("hotelDate", hotelDate);

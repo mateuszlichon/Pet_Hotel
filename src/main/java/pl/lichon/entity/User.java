@@ -28,6 +28,8 @@ public class User {
 	
 	private String password;
 	
+	private String phoneNumber;
+	
 	@NotEmpty
 	@Email
 	@Column(unique = true)
@@ -82,6 +84,14 @@ public class User {
 
 	public void setPet(List<Pet> pet) {
 		this.pet = pet;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 

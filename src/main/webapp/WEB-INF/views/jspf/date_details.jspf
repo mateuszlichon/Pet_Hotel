@@ -14,9 +14,9 @@
 		</tr>
 		<tr>
 			<td>${hotelDate.day}/${hotelDate.month}/${hotelDate.year}</td>
-			<td><a href="${hotelDate.id}/changeCapacityUp"><button type="button" class="btn btn-primary">up capacity for this day</button></a><BR />
-				${hotelDate.placesLeft}
-				<a href="${hotelDate.id}/changeCapacityDown"><button type="button" class="btn btn-primary">up capacity for this day</button></a><BR />
+			<td><a href="/Pet_Hotel/hotel/showReservations/${hotelDate.id}/changeCapacityUp"><button type="button" class="btn btn-primary">increase</button></a><BR />
+				${hotelDate.placesLeft}<BR />
+				<a href="/Pet_Hotel/hotel/showReservations/${hotelDate.id}/changeCapacityDown"><button type="button" class="btn btn-primary">decrase</button></a><BR />
 			
 			</td>
 			<td>

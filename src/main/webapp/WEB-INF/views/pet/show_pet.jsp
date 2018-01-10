@@ -79,7 +79,7 @@
 						<c:forEach items="${petDates}" var="date">
 							<tr>
 								<td>${date.hotel.name}</td>
-								<td>${date.day}/${date.month}/${date.year}</td>
+								<td>${date.day}/${date.month}/${date.year} <a href="/Pet_Hotel/reservationDate/removePet/${date.id}/${pet.id}"><button type="button" class="btn btn-danger">erase reservation</button></a></td>
 							</tr>
 						</c:forEach>
 					</table>

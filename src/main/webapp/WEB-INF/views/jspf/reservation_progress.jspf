@@ -51,8 +51,14 @@
 
 <c:choose>
 
-	<c:when test="${sessionScope.user == null}">
-		<td>TODO!</td>
+	<c:when test="${(sessionScope.user == null) && (sessionScope.chosenPet == null)}">
+		<td><form method="post" action="/Pet_Hotel/reservationDate/quickRegister">
+			Pet's name <input type="text" name="petName"></input>${petNameError}<BR />
+			Pet's category <input type="text" name="petCategory">${categoryError}</input><BR />
+			Your name <input type="text" name="userName"></input>${userNameError}<BR />
+			Your email <input type="text" name="email"></input>${mailError}<BR />
+		<input type="submit" />
+		</form></td>
 	</c:when>
 </c:choose>
 

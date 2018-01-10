@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
@@ -29,6 +31,7 @@ import pl.lichon.repository.HotelRepository;
 import pl.lichon.repository.PetRepository;
 import pl.lichon.repository.ReservationDateRepository;
 import pl.lichon.repository.ReservationRepository;
+import pl.lichon.repository.UserRepository;
 
 @Controller
 @RequestMapping("reservationDate")
@@ -42,6 +45,9 @@ public class ReservationDateController {
 	
 	@Autowired
 	private HotelRepository hotelRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	//DIRECT PET RESERVATION OPTION
 	@GetMapping("/{petId}/newPetReservation")
@@ -168,6 +174,99 @@ public class ReservationDateController {
 		return "reservation/hotel_reservation_date";
 	}
 	
+	@GetMapping("/showAll")
+	public String showAll(Model m) {
+		HttpSession s = SessionManager.session();
+		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		m.addAttribute("hotel", hotel);
+		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);
+		m.addAttribute("reservation", new ReservationDate());
+		return "reservation/hotel_reservation_date";
+	}
+	
+	//QUICK REGISTRATION WITH VALIDATION
+	@PostMapping("/quickRegister")
+	public String quickRegister(@RequestParam String petName, 
+								@RequestParam String petCategory, 
+								@RequestParam String userName, 
+								@RequestParam String email, RedirectAttributes ra, 
+								Model m) {
+		HttpSession s = SessionManager.session();
+		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		m.addAttribute("hotel", hotel);
+		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);
+		
+		List<User> allUsers = this.userRepository.findAll();
+		if(petName.isEmpty()) {
+			String petNameError = "Pet name cannot be empty";
+			m.addAttribute("petNameError", petNameError);
+			return "reservation/hotel_reservation_date";
+		}
+		if(petCategory.isEmpty()) {
+			String categoryError = "Pet category cannot be empty";
+			m.addAttribute("categoryError", categoryError);
+			return "reservation/hotel_reservation_date";
+		}
+		if(userName.isEmpty()) {
+			String userNameError = "Owner name cannot be empty";
+			m.addAttribute("userNameError", userNameError);
+			return "reservation/hotel_reservation_date";
+		}
+		if(email.isEmpty()) {
+			String mailError = "Email cannot be empty";
+			m.addAttribute("mailError", mailError);
+			return "reservation/hotel_reservation_date";
+		}
+		if(!email.contains("@")) {
+			String mailError = "Please use valid email";
+			m.addAttribute("mailError", mailError);
+			return "reservation/hotel_reservation_date";
+		}
+		
+		
+		for (User user : allUsers) {
+			if (user.getEmail().equals(email)) {
+				String mailError = "This email is already used. Log in or use different one.";
+				m.addAttribute("mailError", mailError);
+				return "reservation/hotel_reservation_date";
+			}
+		}
+		User user = new User();
+		user.setEmail(email);
+		user.setName(userName);
+		Pet pet = new Pet();
+		pet.setName(petName);
+		pet.setCategory(petCategory);
+		pet.setUser(user);
+		this.userRepository.save(user);
+		this.petRepository.save(pet);
+		s.setAttribute("chosenPet", pet);
+		return "reservation/hotel_reservation_date";
+	}
+	
+	@GetMapping("/removePet/{dateId}/{petId}")
+	public String removePet(@PathVariable long dateId, @PathVariable long petId) {
+		ReservationDate date = this.reservationDateRepository.findOne(dateId);
+		Pet pet = this.petRepository.findOne(petId);
+		List<Pet> pets = date.getPet();
+		pets.remove(pet);
+		date.setPet(pets);
+		this.reservationDateRepository.save(date);
+		
+		List<ReservationDate> rs = pet.getReservationDate();
+		rs.remove(date);
+		pet.setReservationDate(rs);
+		this.petRepository.save(pet);
+		return "redirect:/pet/show";
+	}
+	
+	//CONFIRM ALL
 	@GetMapping("/confirm")
 	public String confirmReservation(Model m) {
 		HttpSession s = SessionManager.session();
