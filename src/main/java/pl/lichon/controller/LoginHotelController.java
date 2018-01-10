@@ -49,12 +49,32 @@ public class LoginHotelController {
 		this.hotelRepository.save(hotel);
 		//January
 		for (int i = 1; i <= 31; i++) {
-			ReservationDate rd = new ReservationDate(i, (i%7), 1, 2018, hotel, hotel.getCapacity());
+			ReservationDate rd = new ReservationDate(i, (i%7), 1, 2018, hotel, hotel.getCapacity(), 0);
 			this.reservationDateRepository.save(rd);
 		}
 		//February
 		for (int i = 1; i <= 28; i++) {
-			ReservationDate rd = new ReservationDate(i, ((i+3)%7), 2, 2018, hotel, hotel.getCapacity());
+			ReservationDate rd = new ReservationDate(i, ((i+3)%7), 2, 2018, hotel, hotel.getCapacity(), 3);
+			this.reservationDateRepository.save(rd);
+		}
+		//March
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+3)%7), 3, 2018, hotel, hotel.getCapacity(), 3);
+			this.reservationDateRepository.save(rd);
+		}
+		//April
+		for (int i = 1; i <= 30; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+6)%7), 4, 2018, hotel, hotel.getCapacity(), 6);
+			this.reservationDateRepository.save(rd);
+		}
+		//May
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+1)%7), 5, 2018, hotel, hotel.getCapacity(), 1);
+			this.reservationDateRepository.save(rd);
+		}
+		//June
+		for (int i = 1; i <= 30; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+4)%7), 6, 2018, hotel, hotel.getCapacity(), 4);
 			this.reservationDateRepository.save(rd);
 		}
 		return "redirect:/";

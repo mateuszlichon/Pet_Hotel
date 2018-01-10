@@ -22,6 +22,8 @@ public class ReservationDate {
 	
 	private int weekDay;
 	
+	private int dayDifference;
+	
 	private int month;
 	
 	private int year;
@@ -38,7 +40,10 @@ public class ReservationDate {
 		super();
 	}
 	
-	
+	public ReservationDate(int day, int weekDay, int month, int year, Hotel hotel, int placesLeft, int dayDifference) {
+		this(day, weekDay, month, year, hotel, placesLeft);
+		this.dayDifference = dayDifference;
+	}
 
 	public ReservationDate(int day, int weekDay, int month, int year, Hotel hotel, int placesLeft) {
 		this(day, weekDay, month, year, hotel);
@@ -127,6 +132,14 @@ public class ReservationDate {
 	
 	public void addPet(Pet pet) {
 		this.getPet().add(pet);
+	}
+
+	public int getDayDifference() {
+		return dayDifference;
+	}
+
+	public void setDayDifference(int dayDifference) {
+		this.dayDifference = dayDifference;
 	}
 	
 	
