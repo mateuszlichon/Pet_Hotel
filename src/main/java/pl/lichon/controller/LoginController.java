@@ -50,7 +50,7 @@ public class LoginController {
 			if (u != null && u.isPasswordCorrect(loginData.getPassword())) {
 				HttpSession s = SessionManager.session();
 				s.setAttribute("user", u);
-				return "login/login_user";
+				return "redirect:/";
 			}
 			m.addAttribute("msg", "Enter valid data");
 			return "login/login_user";

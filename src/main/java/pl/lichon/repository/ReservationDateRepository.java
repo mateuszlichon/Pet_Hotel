@@ -10,4 +10,6 @@ public interface ReservationDateRepository extends JpaRepository<ReservationDate
 
 	List<ReservationDate> findAllByHotelIdAndMonth(long hotelId, int month);
 
+	List<ReservationDate> findAllByPetId(long petId);
+
 }

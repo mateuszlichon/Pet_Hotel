@@ -66,7 +66,7 @@ public class LoginHotelController {
 			if (h != null && h.isPasswordCorrect(loginData.getPassword())) {
 				HttpSession s = SessionManager.session();
 				s.setAttribute("hotel", h);
-				return "login/login_hotel";
+				return "redirect:/hotel/showReservations";
 			}
 			m.addAttribute("msg", "Enter valid data");
 			return "login/login_hotel";

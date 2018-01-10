@@ -23,17 +23,13 @@
 			<h1>Brak zwierza</h1>
 		</c:when>
 		<c:otherwise>
-					<form method="post">
-						<form:select path="pet1.id" items="${userPets}" itemValue="id"
-							label="please select" itemLabel="name"></form:select>
-						<p>
-							<input type="submit" />
-						</p>
-					</form>
-		
-		
+					<c:forEach items="${logedUser.pet}" var="pet">
+						<a href="/Pet_Hotel/pet/show/${pet.id}"><button type="button" class="btn btn-primary">${pet.name}</button></a>    
+					</c:forEach>
+
+				<br>
 			<c:choose>
-				<c:when test="${pet1.id == 0}">
+				<c:when test="${pet == null}">
 		Please choose pet in the menu above
 	</c:when>
 
@@ -43,37 +39,51 @@
 					<table class="table">
 						<tr>
 							<th>Name</th>
-							<td>${pet1.name}</td>
+							<td>${pet.name}</td>
 						</tr>
 						<tr>
 							<th>Category</th>
-							<td>${pet1.category}</td>
+							<td>${pet.category}</td>
 						</tr>
 						<tr>
 							<th>Breed</th>
-							<td>${pet1.breed}</td>
+							<td>${pet.breed}</td>
 						</tr>
 						<tr>
 							<th>Diet</th>
-							<td>${pet1.diet}</td>
+							<td>${pet.diet}</td>
 						</tr>
 						<tr>
 							<th>Description</th>
-							<td>${pet1.description}</td>
+							<td>${pet.description}</td>
 						</tr>
 						<tr>
 							<th>Requirements</th>
-							<td>${pet1.requirements}</td>
+							<td>${pet.requirements}</td>
 						</tr>
 						<tr>
 							<th>Vaccinated</th>
-							<td>${pet1.vaccinated}</td>
+							<td>${pet.vaccinated}</td>
 						</tr>
 
 					</table>
-						<td><a href="/Pet_Hotel/reservationDate/${pet1.id}/newPetReservation"><button type="button" class="btn btn-warning">Make reservation</button></a></td>
-				</c:otherwise>
+					<td><a
+						href="/Pet_Hotel/reservationDate/${pet.id}/newPetReservation"><button
+								type="button" class="btn btn-warning">Make reservation</button></a></td>
 
+					<table>
+						<tr>
+							<th>Hotel</th>
+							<th>Date</th>
+						</tr>
+						<c:forEach items="${petDates}" var="date">
+							<tr>
+								<td>${date.hotel.name}</td>
+								<td>${date.day}/${date.month}/${date.year}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:otherwise>
 			</c:choose>
 		</c:otherwise>
 	</c:choose>

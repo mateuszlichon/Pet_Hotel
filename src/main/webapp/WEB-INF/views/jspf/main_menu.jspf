@@ -18,6 +18,7 @@
 	<c:when test="${sessionScope.hotel != null}">
 		Welcome ${sessionScope.hotel.name}<BR />
 		<a href="/Pet_Hotel"><button type="button" class="btn btn-primary">Main page</button></a>
+		<a href="/Pet_Hotel/hotel/showReservations"><button type="button" class="btn btn-primary">Show reservations</button></a>
 		<a href="/Pet_Hotel/logout"><button type="button" class="btn btn-primary">Logout</button></a>
 	</c:when>
 

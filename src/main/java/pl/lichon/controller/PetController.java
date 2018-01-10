@@ -11,13 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Pet;
+import pl.lichon.entity.ReservationDate;
 import pl.lichon.entity.User;
 import pl.lichon.repository.PetRepository;
+import pl.lichon.repository.ReservationDateRepository;
 
 @Controller
 @RequestMapping("pet")
@@ -25,6 +28,9 @@ public class PetController {
 
 	@Autowired
 	private PetRepository petRepository;
+	
+	@Autowired
+	private ReservationDateRepository reservationDateRepository;
 
 	@GetMapping("/register")
 	public String registerPer(Model m) {
@@ -47,6 +53,15 @@ public class PetController {
 	@GetMapping("/show")
 	public String showPets(Model m) {
 		m.addAttribute("pet1", new Pet());
+		return "pet/show_pet";
+	}
+	
+	@GetMapping("/show/{petId}")
+	public String showPets(Model m, @PathVariable long petId) {
+		Pet pet = this.petRepository.findOne(petId);
+		List<ReservationDate> petDates = this.reservationDateRepository.findAllByPetId(petId);
+		m.addAttribute("pet", pet);
+		m.addAttribute("petDates", petDates);
 		return "pet/show_pet";
 	}
 	
