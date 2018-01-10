@@ -17,6 +17,7 @@ import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
 import pl.lichon.entity.ReservationDate;
 import pl.lichon.repository.HotelRepository;
+import pl.lichon.repository.MonthRepository;
 import pl.lichon.repository.ReservationDateRepository;
 
 @Controller
@@ -27,6 +28,9 @@ public class LoginHotelController {
 	
 	@Autowired
 	private ReservationDateRepository reservationDateRepository;
+	
+	@Autowired
+	private MonthRepository monthRepository;
 	
 	// hotel section
 	@GetMapping("/loginHotel")
@@ -49,32 +53,32 @@ public class LoginHotelController {
 		this.hotelRepository.save(hotel);
 		//January
 		for (int i = 1; i <= 31; i++) {
-			ReservationDate rd = new ReservationDate(i, (i%7), 1, 2018, hotel, hotel.getCapacity(), 0);
+			ReservationDate rd = new ReservationDate(i, (i%7), this.monthRepository.findOne(1l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
 		//February
 		for (int i = 1; i <= 28; i++) {
-			ReservationDate rd = new ReservationDate(i, ((i+3)%7), 2, 2018, hotel, hotel.getCapacity(), 3);
+			ReservationDate rd = new ReservationDate(i, ((i+3)%7), this.monthRepository.findOne(2l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
 		//March
 		for (int i = 1; i <= 31; i++) {
-			ReservationDate rd = new ReservationDate(i, ((i+3)%7), 3, 2018, hotel, hotel.getCapacity(), 3);
+			ReservationDate rd = new ReservationDate(i, ((i+3)%7), this.monthRepository.findOne(3l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
 		//April
 		for (int i = 1; i <= 30; i++) {
-			ReservationDate rd = new ReservationDate(i, ((i+6)%7), 4, 2018, hotel, hotel.getCapacity(), 6);
+			ReservationDate rd = new ReservationDate(i, ((i+6)%7), this.monthRepository.findOne(4l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
 		//May
 		for (int i = 1; i <= 31; i++) {
-			ReservationDate rd = new ReservationDate(i, ((i+1)%7), 5, 2018, hotel, hotel.getCapacity(), 1);
+			ReservationDate rd = new ReservationDate(i, ((i+1)%7), this.monthRepository.findOne(5l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
 		//June
 		for (int i = 1; i <= 30; i++) {
-			ReservationDate rd = new ReservationDate(i, ((i+4)%7), 6, 2018, hotel, hotel.getCapacity(), 4);
+			ReservationDate rd = new ReservationDate(i, ((i+4)%7), this.monthRepository.findOne(6l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
 		return "redirect:/";

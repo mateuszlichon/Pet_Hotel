@@ -28,6 +28,7 @@ import pl.lichon.entity.Reservation;
 import pl.lichon.entity.ReservationDate;
 import pl.lichon.entity.User;
 import pl.lichon.repository.HotelRepository;
+import pl.lichon.repository.MonthRepository;
 import pl.lichon.repository.PetRepository;
 import pl.lichon.repository.ReservationDateRepository;
 import pl.lichon.repository.ReservationRepository;
@@ -48,6 +49,9 @@ public class ReservationDateController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private MonthRepository monthRepository;
 	
 	//DIRECT PET RESERVATION OPTION
 	@GetMapping("/{petId}/newPetReservation")
@@ -71,8 +75,8 @@ public class ReservationDateController {
 	//HOTEL OPTIONS
 	@GetMapping("/{hotelId}/newHotelReservation")
 	public String newHotelReservation(Model m, @PathVariable long hotelId) {
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, this.monthRepository.findOne(2l));
 		Hotel hotel = this.hotelRepository.findOne(hotelId);
 		HttpSession s = SessionManager.session();
 		s.setAttribute("chosenHotel", hotel);
@@ -96,8 +100,8 @@ public class ReservationDateController {
 	public String newHotelReservationDate(Model m, @PathVariable long dateId) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
 		List<ReservationDate> chosenDate = (List<ReservationDate>) s.getAttribute("chosenDate");
 		if(chosenDate == null) {
 			chosenDate = new ArrayList<>();
@@ -128,8 +132,8 @@ public class ReservationDateController {
 	public String clearDates(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
 		List<ReservationDate> chosenDate = (List<ReservationDate>) s.getAttribute("chosenDate");
 		if(chosenDate == null) {
 			chosenDate = new ArrayList<>();
@@ -148,8 +152,8 @@ public class ReservationDateController {
 	public String choosePet(Model m, @PathVariable long petId) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
 		Pet pet = this.petRepository.findOne(petId);
 		s.setAttribute("chosenPet", pet);
 		m.addAttribute("hotel", hotel);
@@ -163,8 +167,8 @@ public class ReservationDateController {
 	public String clearPet(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
 		Pet pet = null;
 		s.setAttribute("chosenPet", pet);
 		m.addAttribute("hotel", hotel);
@@ -178,8 +182,8 @@ public class ReservationDateController {
 	public String showAll(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
 		m.addAttribute("hotel", hotel);
 		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);
@@ -196,8 +200,8 @@ public class ReservationDateController {
 								Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);
+		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
 		m.addAttribute("hotel", hotel);
 		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);

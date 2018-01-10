@@ -1,8 +1,13 @@
 package pl.lichon.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,6 +20,19 @@ public class Month {
 	private String name;
 	
 	private int dayDifference;
+	
+	@OneToMany(mappedBy = "month", fetch = FetchType.EAGER)
+	private List<ReservationDate> reservationDate = new ArrayList<>();
+
+	private int year;
+	
+	public Month(long id, String name, int dayDifference, int year) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.dayDifference = dayDifference;
+		this.year = year;
+	}
 
 	public Month(long id, String name, int dayDifference) {
 		super();
@@ -43,12 +61,28 @@ public class Month {
 		this.name = name;
 	}
 
-	public int getDifference() {
+	public int getDayDifference() {
 		return dayDifference;
 	}
 
-	public void setDifference(int difference) {
-		this.dayDifference = difference;
+	public void setDayDifference(int dayDifference) {
+		this.dayDifference = dayDifference;
+	}
+
+	public List<ReservationDate> getReservationDate() {
+		return reservationDate;
+	}
+
+	public void setReservationDate(List<ReservationDate> reservationDate) {
+		this.reservationDate = reservationDate;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 

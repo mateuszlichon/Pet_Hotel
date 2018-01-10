@@ -21,11 +21,10 @@ public class ReservationDate {
 	private int day;
 	
 	private int weekDay;
-	
-	private int dayDifference;
-	
-	private int month;
-	
+
+	@ManyToOne
+	private Month month;
+
 	private int year;
 	
 	@ManyToOne
@@ -39,32 +38,16 @@ public class ReservationDate {
 	public ReservationDate() {
 		super();
 	}
-	
-	public ReservationDate(int day, int weekDay, int month, int year, Hotel hotel, int placesLeft, int dayDifference) {
-		this(day, weekDay, month, year, hotel, placesLeft);
-		this.dayDifference = dayDifference;
-	}
 
-	public ReservationDate(int day, int weekDay, int month, int year, Hotel hotel, int placesLeft) {
-		this(day, weekDay, month, year, hotel);
-		this.placesLeft = placesLeft;
-	}
-
-	public ReservationDate(int day, int weekDay, int month, int year, Hotel hotel) {
-		this(day, weekDay, month, year);
-		this.hotel = hotel;
-	}
-
-
-	public ReservationDate(int day, int weekDay, int month, int year) {
+	public ReservationDate(int day, int weekDay, Month month, int year, Hotel hotel, int placesLeft) {
 		super();
 		this.day = day;
 		this.weekDay = weekDay;
 		this.month = month;
 		this.year = year;
+		this.hotel = hotel;
+		this.placesLeft = placesLeft;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -88,14 +71,6 @@ public class ReservationDate {
 
 	public void setWeekDay(int weekDay) {
 		this.weekDay = weekDay;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
 	}
 
 	public int getYear() {
@@ -134,13 +109,11 @@ public class ReservationDate {
 		this.getPet().add(pet);
 	}
 
-	public int getDayDifference() {
-		return dayDifference;
+	public void setMonth(Month month) {
+		this.month = month;
 	}
 
-	public void setDayDifference(int dayDifference) {
-		this.dayDifference = dayDifference;
-	}
+
 	
 	
 }

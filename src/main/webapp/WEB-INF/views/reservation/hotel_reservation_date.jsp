@@ -83,6 +83,6 @@
 				</tr>
 			</c:if>
 		</c:forEach>
-	</table
+	</table>
 </body>
 </html>
