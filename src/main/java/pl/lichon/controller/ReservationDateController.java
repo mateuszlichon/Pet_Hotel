@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
+import pl.lichon.entity.Month;
 import pl.lichon.entity.Pet;
 import pl.lichon.entity.Reservation;
 import pl.lichon.entity.ReservationDate;
@@ -75,15 +76,15 @@ public class ReservationDateController {
 	//HOTEL OPTIONS
 	@GetMapping("/{hotelId}/newHotelReservation")
 	public String newHotelReservation(Model m, @PathVariable long hotelId) {
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotelId, this.monthRepository.findOne(2l));
+		Month chosenMonth = this.monthRepository.findOne(1l);
 		Hotel hotel = this.hotelRepository.findOne(hotelId);
+		List<ReservationDate> hotelDates = this.reservationDateRepository.findAllByHotelIdAndMonthIdOrderById(hotel.getId(), chosenMonth.getId());
 		HttpSession s = SessionManager.session();
 		s.setAttribute("chosenHotel", hotel);
+		s.setAttribute("chosenMonth", chosenMonth);
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
-		m.addAttribute("datesFebruary", datesFebruary);
-		m.addAttribute("reservation", new ReservationDate());
+		s.setAttribute("hotelDates", hotelDates);
+//		m.addAttribute("reservation", new ReservationDate());
 		return "reservation/hotel_reservation_date";
 	}
 	
@@ -92,16 +93,32 @@ public class ReservationDateController {
 		HttpSession s = SessionManager.session();
 		s.setAttribute("chosenHotel", null);
 		s.setAttribute("chosenDate", null);
+		s.setAttribute("chosenMonth", null);
 		return "redirect:/";
 	}
 
+	@GetMapping("/{monthId}/month")
+	public String setMonth(Model m, @PathVariable long monthId) {
+		Month chosenMonth = this.monthRepository.findOne(monthId);
+		HttpSession s = SessionManager.session();
+		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
+		s.setAttribute("chosenMonth", chosenMonth);
+		List<ReservationDate> hotelDates = this.reservationDateRepository.findAllByHotelIdAndMonthIdOrderById(hotel.getId(), chosenMonth.getId());
+		s.setAttribute("chosenHotel", hotel);
+		m.addAttribute("hotel", hotel);
+		m.addAttribute("hotelDates", hotelDates);
+/*		m.addAttribute("reservation", new ReservationDate());
+*/		return "reservation/hotel_reservation_date";
+	}
+	
+	
 	//DATE OPTIONS
 	@GetMapping("/{dateId}/date")
 	public String newHotelReservationDate(Model m, @PathVariable long dateId) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
+/*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));*/
 		List<ReservationDate> chosenDate = (List<ReservationDate>) s.getAttribute("chosenDate");
 		if(chosenDate == null) {
 			chosenDate = new ArrayList<>();
@@ -113,18 +130,18 @@ public class ReservationDateController {
 				chosenDate.remove(rs);
 				s.setAttribute("chosenDate", chosenDate);
 				m.addAttribute("hotel", hotel);
-				m.addAttribute("datesJanuary", datesJanuary);
-				m.addAttribute("datesFebruary", datesFebruary);
-				m.addAttribute("reservation", new ReservationDate());
+/*				m.addAttribute("datesJanuary", datesJanuary);
+				m.addAttribute("datesFebruary", datesFebruary);*/
+//				m.addAttribute("reservation", new ReservationDate());
 				return "reservation/hotel_reservation_date";
 			}
 		}
 		chosenDate.add(rs);
 		s.setAttribute("chosenDate", chosenDate);
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
-		m.addAttribute("datesFebruary", datesFebruary);
-		m.addAttribute("reservation", new ReservationDate());
+/*		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);*/
+//		m.addAttribute("reservation", new ReservationDate());
 		return "reservation/hotel_reservation_date";
 	}
 	
@@ -132,8 +149,8 @@ public class ReservationDateController {
 	public String clearDates(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
+/*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));*/
 		List<ReservationDate> chosenDate = (List<ReservationDate>) s.getAttribute("chosenDate");
 		if(chosenDate == null) {
 			chosenDate = new ArrayList<>();
@@ -141,9 +158,9 @@ public class ReservationDateController {
 		chosenDate = null;
 		s.setAttribute("chosenDate", chosenDate);
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
-		m.addAttribute("datesFebruary", datesFebruary);
-		m.addAttribute("reservation", new ReservationDate());
+/*		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);*/
+//		m.addAttribute("reservation", new ReservationDate());
 		return "reservation/hotel_reservation_date";
 	}
 	
@@ -152,14 +169,14 @@ public class ReservationDateController {
 	public String choosePet(Model m, @PathVariable long petId) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
+/*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));*/
 		Pet pet = this.petRepository.findOne(petId);
 		s.setAttribute("chosenPet", pet);
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
-		m.addAttribute("datesFebruary", datesFebruary);
-		m.addAttribute("reservation", new ReservationDate());
+/*		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);*/
+//		m.addAttribute("reservation", new ReservationDate());
 		return "reservation/hotel_reservation_date";
 	}
 	
@@ -167,14 +184,14 @@ public class ReservationDateController {
 	public String clearPet(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
+/*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));*/
 		Pet pet = null;
 		s.setAttribute("chosenPet", pet);
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
+/*		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);
-		m.addAttribute("reservation", new ReservationDate());
+		m.addAttribute("reservation", new ReservationDate());*/
 		return "reservation/hotel_reservation_date";
 	}
 	
@@ -182,12 +199,12 @@ public class ReservationDateController {
 	public String showAll(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
+/*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));*/
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
+/*		m.addAttribute("datesJanuary", datesJanuary);
 		m.addAttribute("datesFebruary", datesFebruary);
-		m.addAttribute("reservation", new ReservationDate());
+		m.addAttribute("reservation", new ReservationDate());*/
 		return "reservation/hotel_reservation_date";
 	}
 	
@@ -200,11 +217,11 @@ public class ReservationDateController {
 								Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
-		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
-		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));
+/*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(1l));
+		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), this.monthRepository.findOne(2l));*/
 		m.addAttribute("hotel", hotel);
-		m.addAttribute("datesJanuary", datesJanuary);
-		m.addAttribute("datesFebruary", datesFebruary);
+/*		m.addAttribute("datesJanuary", datesJanuary);
+		m.addAttribute("datesFebruary", datesFebruary);*/
 		
 		List<User> allUsers = this.userRepository.findAll();
 		if(petName.isEmpty()) {
@@ -346,5 +363,10 @@ public class ReservationDateController {
 	@ModelAttribute("availableHotels")
 	public List<Hotel> getHotels() {
 		return this.hotelRepository.findAll();
+	}
+	
+	@ModelAttribute("months")
+	public List<Month> getMonths() {
+		return this.monthRepository.findAll();
 	}
 }

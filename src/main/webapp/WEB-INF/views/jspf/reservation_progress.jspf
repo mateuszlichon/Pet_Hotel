@@ -42,7 +42,7 @@
 <c:choose>
 	<c:when test="${sessionScope.chosenDate != null}">
 		<td><ul><c:forEach items="${sessionScope.chosenDate}" var="date">
-			<li>${date.day}/${date.month}/${date.year}</li>
+			<li>${date.day} ${date.month.name} ${date.year}</li>
 		</c:forEach></ul>
 		<a href="/Pet_Hotel/reservationDate/clear"><button type="button" class="btn btn-danger">clear dates</button></a>
 		</td>

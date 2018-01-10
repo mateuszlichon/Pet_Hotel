@@ -113,6 +113,10 @@ public class ReservationDate {
 		this.month = month;
 	}
 
+	public Month getMonth() {
+		return month;
+	}
+
 
 	
 	

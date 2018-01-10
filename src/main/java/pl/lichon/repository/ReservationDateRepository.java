@@ -9,8 +9,12 @@ import pl.lichon.entity.ReservationDate;
 
 public interface ReservationDateRepository extends JpaRepository<ReservationDate, Long> {
 
-	List<ReservationDate> findAllByHotelIdAndMonth(long hotelId, Month month);
+	List<ReservationDate> findAllByHotelIdAndMonthIdOrderById(long hotelId, long monthId);
 
 	List<ReservationDate> findAllByPetId(long petId);
+
+	List<ReservationDate> findAllByHotelIdOrderById(long hotelId);
+
+	List<ReservationDate> findAllByHotelIdAndMonthId(long id, long id2);
 
 }
