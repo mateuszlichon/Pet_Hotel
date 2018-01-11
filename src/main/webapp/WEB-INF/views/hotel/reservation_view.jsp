@@ -50,16 +50,28 @@
 				</c:forEach>
 			</c:if>
 			<td><c:choose>
+					<c:when test="${(date.day == tDay) and (date.month.id == tMonth)}">
+						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
+								type="button" class="btn btn-success"
+								style="background-color: #F0E68C;">
+								<h3>${date.day}</h3>
+								Pets booked ${date.amount}
+							</button></a>
+					</c:when>
 					<c:when test="${not empty date.pet}">
 						<a href="/Pet_Hotel/hotel/showReservations/${date.id}"><button
-								type="button" class="btn btn-success"><h3>${date.day}</h3>
-								Pets booked ${date.amount}</button></a>
+								type="button" class="btn btn-success">
+								<h3>${date.day}</h3>
+								Pets booked ${date.amount}
+							</button></a>
 					</c:when>
 
 					<c:otherwise>
 						<a href="/Pet_Hotel/hotel/showReservations/${date.id}"><button
-								type="button" class="btn btn-default"><h3>${date.day}</h3>
-								Pets booked ${date.amount}</button></a>
+								type="button" class="btn btn-default">
+								<h3>${date.day}</h3>
+								Pets booked ${date.amount}
+							</button></a>
 					</c:otherwise>
 				</c:choose></td>
 			<c:if test="${date.weekDay == 0}">

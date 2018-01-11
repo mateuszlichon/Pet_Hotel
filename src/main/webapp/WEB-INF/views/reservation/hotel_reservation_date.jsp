@@ -48,18 +48,27 @@
 					<td></td>
 				</c:forEach>
 			</c:if>
-			<td><c:choose>
+			<td align="center"><c:choose>
 					<c:when test="${(date.day < tDay) and (date.month.id <= tMonth)}">
 						<button type="button" class="btn btn-default">
 							<h3>${date.day}</h3>
 							Past date
-						</button></a>
+						</button>
+
+					</c:when>
+					<c:when test="${(date.day == tDay) and (date.month.id == tMonth)}">
+						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
+								type="button" class="btn btn-success"
+								style="background-color: #F0E68C;">
+								<h3>${date.day}</h3>
+								Places left ${date.placesLeft}
+							</button></a>
 					</c:when>
 					<c:when test="${date.placesLeft > 5}">
 						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
 								type="button" class="btn btn-success">
 								<h3>${date.day}</h3>
-								Places left ${date.placesLeft}
+								Many places left
 							</button></a>
 					</c:when>
 					<c:when test="${date.placesLeft > 3}">

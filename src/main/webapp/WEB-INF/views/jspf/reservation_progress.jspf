@@ -39,7 +39,7 @@
 				<td>Name: ${sessionScope.chosenHotel.name}<BR /> Address:
 					${sessionScope.chosenHotel.addressStreet},
 					${sessionScope.chosenHotel.addressCity}<BR /> Requirements:
-					${sessionScope.chosenHotel.requirements}<BR /> 
+					${sessionScope.chosenHotel.requirements}<BR />
 				</td>
 			</c:when>
 		</c:choose>
@@ -49,7 +49,7 @@
 						<c:forEach items="${sessionScope.chosenDate}" var="date">
 							<li>${date.day}${date.month.name}${date.year}</li>
 						</c:forEach>
-					</ul> </td>
+					</ul></td>
 			</c:when>
 		</c:choose>
 
@@ -73,20 +73,23 @@
 				<td align="center">${sessionScope.chosenPet.name}<BR />
 				</td>
 			</c:when>
-			<c:otherwise>
-				<td align="center"><c:forEach items="${sessionScope.user.pet}" var="pet">
+			<c:when
+				test="${(sessionScope.chosenPet == null) and (sessionScope.user != null)}">
+				<td align="center"><c:forEach items="${sessionScope.user.pet}"
+						var="pet">
 						<a href="/Pet_Hotel/reservationDate/${pet.id}/pet"><button
 								type="button" class="btn btn-primary">${pet.name}</button></a>
 
 					</c:forEach></td>
-			</c:otherwise>
+			</c:when>
 		</c:choose>
 
 	</tr>
 	<tr>
 		<c:choose>
 			<c:when test="${sessionScope.chosenHotel != null}">
-				<td align="center"><a href="/Pet_Hotel/reservationDate/hotel/clear">
+				<td align="center"><a
+					href="/Pet_Hotel/reservationDate/hotel/clear">
 						<button type="button" class="btn btn-danger">clear hotel</button>
 				</a></td>
 			</c:when>
@@ -98,17 +101,18 @@
 			</c:when>
 		</c:choose>
 
-		<c:choose>
-
+		<%-- 		<c:choose>
+c
 			<c:when
 				test="${(sessionScope.user == null) && (sessionScope.chosenPet == null)}">
 				<td></td>
 			</c:when>
-		</c:choose>
+		</c:choose> --%>
 
 		<c:choose>
 			<c:when test="${sessionScope.chosenPet != null}">
-				<td align="center"><a href="/Pet_Hotel/reservationDate/pet/clear"><button
+				<td align="center"><a
+					href="/Pet_Hotel/reservationDate/pet/clear"><button
 							type="button" class="btn btn-danger">clear pet</button></a></td>
 			</c:when>
 			<c:otherwise>
@@ -119,7 +123,8 @@
 			<c:when
 				test="${(sessionScope.chosenPet != null) and (sessionScope.chosenDate != null) and (sessionScope.chosenHotel != null)}">
 				<tr>
-					<td colspan="3" align="center"><a href="/Pet_Hotel/reservationDate/confirm"><button
+					<td colspan="3" align="center"><a
+						href="/Pet_Hotel/reservationDate/confirm"><button
 								type="button" class="btn btn-primary">Confirm
 								reservation :)</button></a> ${repetPetMessage} <c:forEach
 							items="${repetPetDates}" var="date">

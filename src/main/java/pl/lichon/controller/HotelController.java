@@ -49,7 +49,8 @@ public class HotelController {
 	public String showReservations(Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("hotel");
-		Month chosenMonth = this.monthRepository.findOne(1l);
+		long tMonth = (long) s.getAttribute("tMonth");
+		Month chosenMonth = this.monthRepository.findOne(tMonth);
 		List<ReservationDate> hotelDates = this.reservationDateRepository
 				.findAllByHotelIdAndMonthIdOrderById(hotel.getId(), chosenMonth.getId());
 		s.setAttribute("chosenHotel", hotel);

@@ -2,6 +2,7 @@ package pl.lichon.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -33,9 +34,11 @@ public class HomeController {
 		s.setAttribute("chosenHotel", null);
 		s.setAttribute("chosenDate", null);
 		s.setAttribute("chosenMonth", null);
+		Date date = new Date();
+		long tMonth = date.getMonth() + 1;
 		Calendar calendar = Calendar.getInstance();
 		int tDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int tMonth = calendar.get(Calendar.MONTH + 1);
+//		int tMonth = calendar.get(Calendar.MONTH + 2);
 		s.setAttribute("tDay", tDay);
 		s.setAttribute("tMonth", tMonth);
 		return "home";
