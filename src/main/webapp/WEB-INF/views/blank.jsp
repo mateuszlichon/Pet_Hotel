@@ -11,8 +11,41 @@
 <body>
 	<%@ include file="jspf/main_menu.jspf"%>
 	
-	${pets}
-	${date}
+	<p>Pet To Delete</p>
+	${petToDelete.id} ${petToDelete.day} ${petToDelete.month.name}
+	
+	<p>New Data</p>
+	Pets:
+	<c:forEach items="${pets}" var="p">
+	${p.name}
+	</c:forEach>
+	
+	<br>
+	
+	Dates:
+	<c:forEach items="${date}" var="d">
+	${d.day} ${d.month.name}
+	</c:forEach>
+	
+	<br>
+	<p>Data Oryginal</p>
+	Pets2:
+	<c:forEach items="${pets2}" var="d">
+	${d.name}
+	</c:forEach>
+	
+	<br>
+	
+	
+	RS:
+	<c:forEach items="${rs}" var="p">
+	${p.day} ${p.month.name}
+	</c:forEach>
+	
+	<br>
+	
+
+	
 	
 </body>
 </html>

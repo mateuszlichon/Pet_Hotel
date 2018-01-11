@@ -307,21 +307,48 @@ public class ReservationDateController {
 	public String removePet(Model m, @PathVariable long dateId, @PathVariable long petId) {
 		ReservationDate date = this.reservationDateRepository.findOne(dateId);
 		Pet pet = this.petRepository.findOne(petId);
+		List<Pet> pets = date.getPet();
+		List<Pet> petsOrg = date.getPet();
 		
 		List<ReservationDate> rs = pet.getReservationDate();
-		rs.remove(date);
+		List<ReservationDate> rsOrg = pet.getReservationDate();
+		ReservationDate toDeleteRS = null;
+		Pet toDeletePet = null;
+		
+		for (ReservationDate reservationDate : rs) {
+			if(reservationDate.getId() == dateId) {
+				toDeleteRS = reservationDate;
+			}
+		}
+		
+		rs.remove(toDeleteRS);
+		
+		for (Pet pet2 : pets) {
+			if(pet2.getId() == petId) {
+				toDeletePet = pet2;
+			}
+		}
+		
+		pets.remove(toDeletePet);
+		
+//		rs.remove(date);
 		pet.setReservationDate(rs);
 		this.petRepository.save(pet);
 		
-		List<Pet> pets = date.getPet();
-		pets.remove(pet);
+//		List<Pet> petsOrg = date.getPet();
+//		pets.remove(pet);
 		date.setPet(pets);
 		this.reservationDateRepository.save(date);
 
 //		return pets.toString();
 //		return "redirect:/pet/show";
-		m.addAttribute("pets", date.getPet());
-		m.addAttribute("date", pet.getReservationDate());
+		m.addAttribute("petToDelete",toDeleteRS);
+
+		
+		m.addAttribute("pets", pets);
+		m.addAttribute("date", rs);
+		m.addAttribute("rs", rsOrg);
+		m.addAttribute("pets2", petsOrg);
 //		m.addAttribute("date", pet.getReservationDate().toString());
 		return "blank";
 	}
