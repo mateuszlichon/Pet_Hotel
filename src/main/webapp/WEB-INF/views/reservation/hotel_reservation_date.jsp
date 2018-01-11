@@ -16,42 +16,61 @@
 <body>
 	<%@ include file="../jspf/main_menu.jspf"%>
 	<%@ include file="../jspf/reservation_progress.jspf"%>
-	<h5>Register hotel ${hotel.name}:</h5>
+	<p align="center">
 	<c:forEach items="${months}" var="month">
 		<a href="/Pet_Hotel/reservationDate/${month.id}/month"><button
-				type="button" class="btn btn-success">${month.name}</button></a>
+				type="button" class="btn btn-info" style="width: 9em"><h4>${month.name}</h4></button></a>
 	</c:forEach>
-	<h2>${chosenMonth.name}</h2>
-	<br>
-	<table>
-		<tr>
-			<th>M</th>
-			<th>T</th>
-			<th>W</th>
-			<th>T</th>
-			<th>F</th>
-			<th>S</th>
-			<th>S</th>
-		</tr>
-
+	</p>
+	
+	<br><br>
+	<h2 align="center">${chosenMonth.name}</h2>
+	<table class="table-small" align="center">
+		<thead class="thead-light">
+			<tr align="center">
+				<th>Monday</th>
+				<th>Tuesday</th>
+				<th>Wednesday</th>
+				<th>Thursday</th>
+				<th>Friday</th>
+				<th>Saturday</th>
+				<th>Sunday</th>
+			</tr>
+		</thead>
 		<c:forEach items="${hotelDates}" var="date">
 			<c:if test="${date.weekDay == 1}">
 				<tr>
 			</c:if>
 			<c:if test="${date.day == 1}">
 				<c:forEach begin="1" end="${chosenMonth.dayDifference}" var="num">
-					<td>${num}</td>
+					<td></td>
 				</c:forEach>
 			</c:if>
 			<td><c:choose>
+					<c:when test="${date.placesLeft > 5}">
+						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
+								type="button" class="btn btn-success">
+								<h3>${date.day}</h3>
+								Places left ${date.placesLeft}
+							</button></a>
+					</c:when>
 					<c:when test="${date.placesLeft > 3}">
 						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
-								type="button" class="btn btn-success">${date.day}</button></a>
+								type="button" class="btn-warning">
+								<h3>${date.day}</h3>
+								Places left ${date.placesLeft}
+							</button></a>
+					</c:when>
+					<c:when test="${date.placesLeft > 0}">
+						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
+								type="button" class="btn btn-danger">
+								<h3>${date.day}</h3>
+								Places left ${date.placesLeft}
+							</button></a>
 					</c:when>
 
 					<c:otherwise>
-						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
-								type="button" class="btn btn-danger">${date.day}</button></a>
+						<button type="button" class="btn btn-default">${date.day}</button>
 					</c:otherwise>
 				</c:choose></td>
 			<c:if test="${date.weekDay == 0}">

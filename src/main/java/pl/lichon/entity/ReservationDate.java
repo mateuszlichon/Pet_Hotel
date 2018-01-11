@@ -116,6 +116,10 @@ public class ReservationDate {
 	public Month getMonth() {
 		return month;
 	}
+	
+	public int getAmount() {
+		return this.pet.size();
+	}
 
 
 	

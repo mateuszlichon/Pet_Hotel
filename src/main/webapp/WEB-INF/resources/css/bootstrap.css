@@ -1634,6 +1634,11 @@ pre code {
   background-color: transparent;
 }
 
+.table-small {
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
 .table th,
 .table td {
   padding: 0.75rem;
