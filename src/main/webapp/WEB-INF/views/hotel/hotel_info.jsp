@@ -12,12 +12,11 @@
 </head>
 <body>
 <%@ include file = "../jspf/main_menu.jspf" %>
+<br>
+<h1 align="center">${hotel.name}</h1>
 
-			<table class="table-bordered">
-				<tr>
-					<th>Name</th>
-					<td>${hotel.name}</td>
-				</tr>
+			<table class="table">
+
 				<tr>
 					<th>description</th>
 					<td>${hotel.description}</td>
@@ -33,6 +32,10 @@
 				<tr>
 					<th>addressStreet</th>
 					<td>${hotel.addressStreet}</td>
+				</tr>
+				<tr>
+					<th>email</th>
+					<td>${hotel.email}</td>
 				</tr>
 
 			</table>

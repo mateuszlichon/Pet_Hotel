@@ -17,6 +17,7 @@
 	<p>Capacity <input type="number" name="capacity"></p>
 	<p>Password<form:password path="password" /><form:errors path="password"></form:errors></p>
 	<p>Description<form:input path="description" /><form:errors path="description"></form:errors></p>
+	<p>Details<input type=textarea name="capacity"></p>
 	<p>Requirements<form:input path="requirements" /><form:errors path="requirements"></form:errors></p>
 	<p>City<form:input path="addressCity" /><form:errors path="addressCity"></form:errors></p>
 	<p>Street<form:input path="addressStreet" /><form:errors path="addressStreet"></form:errors></p>

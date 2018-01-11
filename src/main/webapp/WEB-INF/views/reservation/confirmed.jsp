@@ -16,7 +16,7 @@
 <body>
 	<%@ include file="../jspf/main_menu.jspf"%>
 	<h2>Your reservation is confirmed :)</h2>
-<h3>${hotel.name} will be spending ${datesNumber} days in ${hotel.name}</h3>
+<h3>${pet.name} will be spending ${datesNumber} days in ${hotel.name}</h3>
 Booked dates: <br>
 <c:forEach items="${dates}" var="date">
 ${date.day} ${date.month.name} ${date.year}<br>

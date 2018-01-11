@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -33,7 +34,10 @@ public class Hotel {
 	
 	private int capacity;
 	
+	@Size(max = 160)
 	private String description;
+	
+	private String details;
 	
 	private String requirements;
 	
@@ -126,4 +130,21 @@ public class Hotel {
 		this.capacity = capacity;
 	}
 
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public List<ReservationDate> getReservationDate() {
+		return reservationDate;
+	}
+
+	public void setReservationDate(List<ReservationDate> reservationDate) {
+		this.reservationDate = reservationDate;
+	}
+
+	
 }
