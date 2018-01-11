@@ -17,13 +17,15 @@
 	<%@ include file="../jspf/main_menu.jspf"%>
 	<%@ include file="../jspf/reservation_progress.jspf"%>
 	<p align="center">
-	<c:forEach items="${months}" var="month">
-		<a href="/Pet_Hotel/reservationDate/${month.id}/month"><button
-				type="button" class="btn btn-info" style="width: 9em"><h4>${month.name}</h4></button></a>
-	</c:forEach>
+		<c:forEach items="${months}" var="month">
+			<a href="/Pet_Hotel/reservationDate/${month.id}/month"><button
+					type="button" class="btn btn-info" style="width: 9em">
+					<h4>${month.name}</h4>
+				</button></a>
+		</c:forEach>
 	</p>
-	
-	<br><br>
+	<br>
+	<br>
 	<h2 align="center">${chosenMonth.name}</h2>
 	<table class="table-small" align="center">
 		<thead class="thead-light">
@@ -47,6 +49,12 @@
 				</c:forEach>
 			</c:if>
 			<td><c:choose>
+					<c:when test="${(date.day < tDay) and (date.month.id <= tMonth)}">
+						<button type="button" class="btn btn-default">
+							<h3>${date.day}</h3>
+							Past date
+						</button></a>
+					</c:when>
 					<c:when test="${date.placesLeft > 5}">
 						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
 								type="button" class="btn btn-success">
@@ -56,7 +64,8 @@
 					</c:when>
 					<c:when test="${date.placesLeft > 3}">
 						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
-								type="button" class="btn-warning">
+								type="button" class="btn btn-success"
+								style="background-color: orange;">
 								<h3>${date.day}</h3>
 								Places left ${date.placesLeft}
 							</button></a>
@@ -70,7 +79,10 @@
 					</c:when>
 
 					<c:otherwise>
-						<button type="button" class="btn btn-default">${date.day}</button>
+						<button type="button" class="btn btn-default">
+							<h3>${date.day}</h3>
+							Places left ${date.placesLeft}
+						</button>
 					</c:otherwise>
 				</c:choose></td>
 			<c:if test="${date.weekDay == 0}">
