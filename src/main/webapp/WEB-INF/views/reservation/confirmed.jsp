@@ -20,7 +20,7 @@ hotel: ${hotel.name}
 pet: ${pet.name}
 ${datesNumber} dates:<br>
 <c:forEach items="${dates}" var="date">
-${date.day}/${date.month}/${date.year}<br>
+${date.day} ${date.month.name} ${date.year}<br>
 </c:forEach>
 
 </body>

@@ -81,6 +81,36 @@ public class LoginHotelController {
 			ReservationDate rd = new ReservationDate(i, ((i+4)%7), this.monthRepository.findOne(6l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
+		//July
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+6)%7), this.monthRepository.findOne(7l), 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
+		//August
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+2)%7), this.monthRepository.findOne(8l), 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
+		//September
+		for (int i = 1; i <= 30; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+5)%7), this.monthRepository.findOne(9l), 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
+		//October
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+0)%7), this.monthRepository.findOne(10l), 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
+		//November
+		for (int i = 1; i <= 30; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+3)%7), this.monthRepository.findOne(11l), 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
+		//December
+		for (int i = 1; i <= 31; i++) {
+			ReservationDate rd = new ReservationDate(i, ((i+5)%7), this.monthRepository.findOne(12l), 2018, hotel, hotel.getCapacity());
+			this.reservationDateRepository.save(rd);
+		}
 		return "redirect:/";
 	}
 	

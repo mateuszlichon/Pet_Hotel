@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
 import pl.lichon.repository.HotelRepository;
 
@@ -25,6 +28,10 @@ public class HomeController {
 	public String home(Model m) {
 		List<String> citiesList = getCitiesList();
 		m.addAttribute("citiesList", citiesList);
+		HttpSession s = SessionManager.session();
+		s.setAttribute("chosenHotel", null);
+		s.setAttribute("chosenDate", null);
+		s.setAttribute("chosenMonth", null);
 		return "home";
 	}
 	

@@ -18,7 +18,8 @@
 	<%@ include file="../jspf/reservation_progress.jspf"%>
 	<h5>Register hotel ${hotel.name}:</h5>
 	<c:forEach items="${months}" var="month">
-	<a href="/Pet_Hotel/reservationDate/${month.id}/month"><button type="button" class="btn btn-success">${month.name}</button></a>
+		<a href="/Pet_Hotel/reservationDate/${month.id}/month"><button
+				type="button" class="btn btn-success">${month.name}</button></a>
 	</c:forEach>
 	<h2>${chosenMonth.name}</h2>
 	<br>
@@ -32,12 +33,15 @@
 			<th>S</th>
 			<th>S</th>
 		</tr>
-		<c:forEach begin="1" end="${chosenMonth.dayDifference}" var="num">
-		  <td>${num}</td>
-		</c:forEach>
+
 		<c:forEach items="${hotelDates}" var="date">
 			<c:if test="${date.weekDay == 1}">
 				<tr>
+			</c:if>
+			<c:if test="${date.day == 1}">
+				<c:forEach begin="1" end="${chosenMonth.dayDifference}" var="num">
+					<td>${num}</td>
+				</c:forEach>
 			</c:if>
 			<td><c:choose>
 					<c:when test="${date.placesLeft > 3}">
@@ -55,7 +59,7 @@
 			</c:if>
 		</c:forEach>
 	</table>
-<%-- 	<br> February:
+	<%-- 	<br> February:
 	<br>
 	<table>
 		<tr>

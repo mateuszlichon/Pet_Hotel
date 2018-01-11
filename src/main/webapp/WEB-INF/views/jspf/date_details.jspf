@@ -13,7 +13,7 @@
 			<th>Pets on this day</th>
 		</tr>
 		<tr>
-			<td>${hotelDate.day}/${hotelDate.month}/${hotelDate.year}</td>
+			<td>${hotelDate.day} ${hotelDate.month.name} ${hotelDate.year}</td>
 			<td><a href="/Pet_Hotel/hotel/showReservations/${hotelDate.id}/changeCapacityUp"><button type="button" class="btn btn-primary">increase</button></a><BR />
 				${hotelDate.placesLeft}<BR />
 				<a href="/Pet_Hotel/hotel/showReservations/${hotelDate.id}/changeCapacityDown"><button type="button" class="btn btn-primary">decrase</button></a><BR />
