@@ -19,13 +19,21 @@
 
 
 	<c:choose>
-		<c:when test="${logedUser.pet == null}">
-			<h1>Brak zwierza</h1>
+		<c:when test="${user.pet == null}">
+			<h1>You have not pet registered</h1>
 		</c:when>
 		<c:otherwise>
-					<c:forEach items="${logedUser.pet}" var="pet">
-						<a href="/Pet_Hotel/pet/show/${pet.id}"><button type="button" class="btn btn-primary">${pet.name}</button></a>    
-					</c:forEach>
+		<h4 align="center">Your registered pets are:</h4>
+					<p align="center"><c:forEach items="${logedUser.pet}" var="p">
+					<c:choose>
+					<c:when test="${pet.id == p.id}">
+						<a href="/Pet_Hotel/pet/show/${p.id}"><button type="button" class="btn btn-default" style="background-color: #F0E68C;">${p.name}, ${p.category}</button></a>    
+					</c:when>
+					<c:otherwise>
+						<a href="/Pet_Hotel/pet/show/${p.id}"><button type="button" class="btn btn-default">${p.name}, ${p.category}</button></a>    					
+					</c:otherwise>
+					</c:choose>
+					</c:forEach></p>
 
 				<br>
 			<c:choose>
@@ -67,11 +75,14 @@
 						</tr>
 
 					</table>
-					<td><a
-						href="/Pet_Hotel/reservationDate/${pet.id}/newPetReservation"><button
-								type="button" class="btn btn-warning">Make reservation</button></a></td>
+					
+					<p align="center"><a href="/Pet_Hotel/reservationDate/${pet.id}/newPetReservation"><button
+								type="button" class="btn btn-warning"><h1 align="right">Make reservation</h1></button></a></p>
 
-					<table>
+					<table align="center">
+						<tr align="center">
+							<th colspan="2">Previous reservations</th>
+						</tr>
 						<tr>
 							<th>Hotel</th>
 							<th>Date</th>
@@ -79,7 +90,7 @@
 						<c:forEach items="${petDates}" var="date">
 							<tr>
 								<td>${date.hotel.name}</td>
-								<td>${date.day}/${date.month}/${date.year} <a href="/Pet_Hotel/reservationDate/removePet/${date.id}/${pet.id}"><button type="button" class="btn btn-danger">erase reservation</button></a></td>
+								<td>${date.day} ${date.month.name} ${date.year} <a href="/Pet_Hotel/reservationDate/removePet/${date.id}/${pet.id}"><button type="button" class="btn btn-danger">erase reservation</button></a></td>
 							</tr>
 						</c:forEach>
 					</table>

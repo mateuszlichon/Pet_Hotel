@@ -41,7 +41,7 @@ public class Pet {
 	@ManyToOne
 	private User user;
 	
-	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pet")
 	private List<ReservationDate> reservationDate = new ArrayList<>();
 
 	public Pet() {
@@ -130,7 +130,7 @@ public class Pet {
 
 	@Override
 	public String toString() {
-		return name + ", " + category;
+		return id + "::" + name + " :: " + category;
 	}
 
 	public List<ReservationDate> getReservationDate() {

@@ -8,8 +8,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 @Entity
 public class ReservationDate {
@@ -33,6 +35,8 @@ public class ReservationDate {
 	private int placesLeft;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(joinColumns = { @JoinColumn(name = "reservation_date_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "pet_id") })
 	private List<Pet> pet = new ArrayList<>();
 
 	public ReservationDate() {

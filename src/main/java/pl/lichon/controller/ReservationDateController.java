@@ -1,18 +1,13 @@
 package pl.lichon.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +20,12 @@ import pl.lichon.bean.SessionManager;
 import pl.lichon.entity.Hotel;
 import pl.lichon.entity.Month;
 import pl.lichon.entity.Pet;
-import pl.lichon.entity.Reservation;
 import pl.lichon.entity.ReservationDate;
 import pl.lichon.entity.User;
 import pl.lichon.repository.HotelRepository;
 import pl.lichon.repository.MonthRepository;
 import pl.lichon.repository.PetRepository;
 import pl.lichon.repository.ReservationDateRepository;
-import pl.lichon.repository.ReservationRepository;
 import pl.lichon.repository.UserRepository;
 
 @Controller
@@ -311,19 +304,26 @@ public class ReservationDateController {
 	}
 
 	@GetMapping("/removePet/{dateId}/{petId}")
-	public String removePet(@PathVariable long dateId, @PathVariable long petId) {
+	public String removePet(Model m, @PathVariable long dateId, @PathVariable long petId) {
 		ReservationDate date = this.reservationDateRepository.findOne(dateId);
 		Pet pet = this.petRepository.findOne(petId);
+		
+		List<ReservationDate> rs = pet.getReservationDate();
+		rs.remove(date);
+		pet.setReservationDate(rs);
+		this.petRepository.save(pet);
+		
 		List<Pet> pets = date.getPet();
 		pets.remove(pet);
 		date.setPet(pets);
 		this.reservationDateRepository.save(date);
 
-		List<ReservationDate> rs = pet.getReservationDate();
-		rs.remove(date);
-		pet.setReservationDate(rs);
-		this.petRepository.save(pet);
-		return "redirect:/pet/show";
+//		return pets.toString();
+//		return "redirect:/pet/show";
+		m.addAttribute("pets", date.getPet());
+		m.addAttribute("date", pet.getReservationDate());
+//		m.addAttribute("date", pet.getReservationDate().toString());
+		return "blank";
 	}
 
 	// CONFIRM ALL

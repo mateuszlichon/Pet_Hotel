@@ -28,7 +28,7 @@ public class PetController {
 
 	@Autowired
 	private PetRepository petRepository;
-	
+
 	@Autowired
 	private ReservationDateRepository reservationDateRepository;
 
@@ -52,25 +52,43 @@ public class PetController {
 
 	@GetMapping("/show")
 	public String showPets(Model m) {
-		m.addAttribute("pet1", new Pet());
+		HttpSession s = SessionManager.session();
+		User user = (User) s.getAttribute("user");
+		Pet pet = (Pet) s.getAttribute("pet");
+		if (pet == null) {
+			List<Pet> userPets = user.getPet();
+			if (!userPets.isEmpty()) {
+				for (Pet p : userPets) {
+					s.setAttribute("pet", p);
+					List<ReservationDate> petDates = this.reservationDateRepository.findAllByPetId(p.getId());
+					s.setAttribute("petDates", petDates);
+					return "pet/show_pet";
+				}
+			}
+		} else {
+			List<ReservationDate> petDates = this.reservationDateRepository.findAllByPetId(pet.getId());
+			s.setAttribute("petDates", petDates);
+			
+		}
+		// m.addAttribute("pet1", new Pet());
 		return "pet/show_pet";
 	}
-	
+
 	@GetMapping("/show/{petId}")
 	public String showPets(Model m, @PathVariable long petId) {
 		Pet pet = this.petRepository.findOne(petId);
+		HttpSession s = SessionManager.session();
 		List<ReservationDate> petDates = this.reservationDateRepository.findAllByPetId(petId);
-		m.addAttribute("pet", pet);
-		m.addAttribute("petDates", petDates);
+		s.setAttribute("pet", pet);
+		s.setAttribute("petDates", petDates);
 		return "pet/show_pet";
 	}
-	
-	@PostMapping("/show")
-	public String showPetsPost(@ModelAttribute Pet pet1, Model m) {
-		pet1 = this.petRepository.findOne(pet1.getId());
-		m.addAttribute("pet1", pet1);
-		return "pet/show_pet";
-	}
+
+	/*
+	 * @PostMapping("/show") public String showPetsPost(@ModelAttribute Pet pet1,
+	 * Model m) { pet1 = this.petRepository.findOne(pet1.getId());
+	 * m.addAttribute("pet1", pet1); return "pet/show_pet"; }
+	 */
 
 	@ModelAttribute("userPets")
 	public List<Pet> getUserPets() {
@@ -78,7 +96,7 @@ public class PetController {
 		User user = (User) s.getAttribute("user");
 		return this.petRepository.findByUserId(user.getId());
 	}
-	
+
 	@ModelAttribute("logedUser")
 	public User getLogedUser() {
 		HttpSession s = SessionManager.session();

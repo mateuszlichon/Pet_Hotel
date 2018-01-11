@@ -44,9 +44,6 @@ public class Hotel {
 	private String addressStreet;
 	
 	@OneToMany(mappedBy = "hotel")
-	private List<Reservation> reservation = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "hotel")
 	private List<ReservationDate> reservationDate = new ArrayList<>();
 
 	public Hotel() {
@@ -129,18 +126,4 @@ public class Hotel {
 		this.capacity = capacity;
 	}
 
-	public List<Reservation> getReservation() {
-		return reservation;
-	}
-
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
-	}
-	
-/*	public void setJanuary2018() {
-		for (int i = 1; i <= 31; i++) {
-			new ReservationDate(i, i%7, 1, 2018, this, this.capacity);
-		}
-		
-	}*/
 }
