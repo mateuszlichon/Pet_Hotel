@@ -240,7 +240,7 @@ public class ReservationDateController {
 	// QUICK REGISTRATION WITH VALIDATION
 	@PostMapping("/quickRegister")
 	public String quickRegister(@RequestParam String petName, @RequestParam String petCategory,
-			@RequestParam String userName, @RequestParam String email, RedirectAttributes ra, Model m) {
+			@RequestParam String userPassword, @RequestParam String email, RedirectAttributes ra, Model m) {
 		HttpSession s = SessionManager.session();
 		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
 		/*
@@ -255,6 +255,7 @@ public class ReservationDateController {
 		 * m.addAttribute("datesJanuary", datesJanuary); m.addAttribute("datesFebruary",
 		 * datesFebruary);
 		 */
+		
 
 		List<User> allUsers = this.userRepository.findAll();
 		if (petName.isEmpty()) {
@@ -265,11 +266,6 @@ public class ReservationDateController {
 		if (petCategory.isEmpty()) {
 			String categoryError = "Pet category cannot be empty";
 			m.addAttribute("categoryError", categoryError);
-			return "reservation/hotel_reservation_date";
-		}
-		if (userName.isEmpty()) {
-			String userNameError = "Owner name cannot be empty";
-			m.addAttribute("userNameError", userNameError);
 			return "reservation/hotel_reservation_date";
 		}
 		if (email.isEmpty()) {
@@ -290,16 +286,24 @@ public class ReservationDateController {
 				return "reservation/hotel_reservation_date";
 			}
 		}
-		User user = new User();
-		user.setEmail(email);
-		user.setName(userName);
 		Pet pet = new Pet();
 		pet.setName(petName);
 		pet.setCategory(petCategory);
-		pet.setUser(user);
-		this.userRepository.save(user);
+
+		if (userPassword.isEmpty()) {
+			pet.setTempUserEmail(email);
+		} else {
+			User user = new User();
+			user.setEmail(email);
+			user.setPassword(userPassword);
+			user.setName("TemporaryName");
+			pet.setUser(user);
+			this.userRepository.save(user);
+			s.setAttribute("user", user);
+		}
 		this.petRepository.save(pet);
 		s.setAttribute("chosenPet", pet);
+		s.setAttribute("chosenHotel", hotel);
 		return "reservation/hotel_reservation_date";
 	}
 

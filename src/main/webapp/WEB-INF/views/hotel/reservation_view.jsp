@@ -51,7 +51,7 @@
 			</c:if>
 			<td><c:choose>
 					<c:when test="${(date.day == tDay) and (date.month.id == tMonth)}">
-						<a href="/Pet_Hotel/reservationDate/${date.id}/date"><button
+						<a href="/Pet_Hotel/hotel/showReservations/${date.id}"><button
 								type="button" class="btn btn-success"
 								style="background-color: #F0E68C;">
 								<h3>${date.day}</h3>

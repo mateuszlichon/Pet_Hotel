@@ -36,6 +36,8 @@ public class Pet {
 	
 	private String requirements;
 	
+	private String tempUserEmail;
+	
 	private boolean vaccinated;
 	
 	@ManyToOne
@@ -139,6 +141,14 @@ public class Pet {
 
 	public void setReservationDate(List<ReservationDate> reservationDate) {
 		this.reservationDate = reservationDate;
+	}
+
+	public String getTempUserEmail() {
+		return tempUserEmail;
+	}
+
+	public void setTempUserEmail(String tempUserEmail) {
+		this.tempUserEmail = tempUserEmail;
 	}
 	
 	
