@@ -10,7 +10,7 @@
 </head>
 <body>
 	<%@ include file = "../jspf/main_menu.jspf" %>
-	<h2>Welcome to Pet Hotel!</h2>
+	<h2 align="center">Welcome to Pet Hotel!</h2>
 	<%@ include file = "../jspf/login_user_small.jspf" %>
 
 

@@ -82,8 +82,8 @@ public class HotelController {
 	
 	@GetMapping("/showReservations/{dateId}")
 	public String showReservations(Model m, @PathVariable long dateId) {
-		HttpSession s = SessionManager.session();
-		Hotel hotel = (Hotel) s.getAttribute("hotel");
+//		HttpSession s = SessionManager.session();
+//		Hotel hotel = (Hotel) s.getAttribute("hotel");
 /*		List<ReservationDate> datesJanuary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 1);
 		List<ReservationDate> datesFebruary = this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(), 2);*/
 		ReservationDate hotelDate = this.reservationDateRepository.findOne(dateId);

@@ -43,12 +43,19 @@ public class LoginController {
 	}
 	
 	@PostMapping("/register")
-	public String registerPost(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+	public String registerPost(@Valid @ModelAttribute User user, BindingResult bindingResult, Model m) {
 		if(bindingResult.hasErrors()) {
 			return "login/register_user";
 		}
-		this.userRepository.save(user);
-		return "redirect:/";
+		try {			
+			this.userRepository.save(user);
+			HttpSession s = SessionManager.session();
+			s.setAttribute("user", user);
+			return "redirect:/";
+		} catch (Exception e) {
+			m.addAttribute("mailError", "The email is already used. Log in or use different email.");
+			return "login/register_user";
+		}
 	}
 	
 	@PostMapping("/login")

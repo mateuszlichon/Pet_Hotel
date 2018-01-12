@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.lichon.bean.LoginData;
 import pl.lichon.bean.SessionManager;
@@ -48,11 +47,16 @@ public class LoginHotelController {
 	}
 	
 	@PostMapping("/registerHotel")
-	public String registerHotelPost(@Valid @ModelAttribute Hotel hotel, BindingResult bindingResult) {
+	public String registerHotelPost(@Valid @ModelAttribute Hotel hotel, BindingResult bindingResult, Model m) {
 		if(bindingResult.hasErrors()) {
 			return "login/register_hotel";
 		}
-		this.hotelRepository.save(hotel);
+		try {
+			this.hotelRepository.save(hotel);			
+		} catch (Exception e) {
+			m.addAttribute("mailError", "The email is already used. Log in or use different email.");
+			return "login/register_hotel";
+		}
 		//January
 		for (int i = 1; i <= 31; i++) {
 			ReservationDate rd = new ReservationDate(i, (i%7), this.monthRepository.findOne(1l), 2018, hotel, hotel.getCapacity());
@@ -113,6 +117,8 @@ public class LoginHotelController {
 			ReservationDate rd = new ReservationDate(i, ((i+5)%7), this.monthRepository.findOne(12l), 2018, hotel, hotel.getCapacity());
 			this.reservationDateRepository.save(rd);
 		}
+		HttpSession s = SessionManager.session();
+		s.setAttribute("hotel", hotel);
 		return "redirect:/";
 	}
 	

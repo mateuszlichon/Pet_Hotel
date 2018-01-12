@@ -153,7 +153,7 @@ public class ReservationDateController {
 	public String clearDates(Model m) {
 		HttpSession s = SessionManager.session();
 		s.setAttribute("chosenDate", null);
-		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
+//		Hotel hotel = (Hotel) s.getAttribute("chosenHotel");
 		/*
 		 * List<ReservationDate> datesJanuary =
 		 * this.reservationDateRepository.findAllByHotelIdAndMonth(hotel.getId(),

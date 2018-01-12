@@ -10,7 +10,7 @@
 </head>
 <body>
 	<%@ include file="jspf/main_menu.jspf"%>
-	<h2>Welcome to Pet Hotel!</h2>
+	<h2 align="center">Welcome to Pet Hotel!</h2>
 	<form method="post">
 		Filter hotels by cities <select name="city">
 			<c:forEach var="city" items="${citiesList}">
