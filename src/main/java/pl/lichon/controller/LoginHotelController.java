@@ -1,5 +1,7 @@
 package pl.lichon.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -126,5 +128,9 @@ public class LoginHotelController {
 			return "login/login_hotel";
 	}
 	
+	@ModelAttribute("availableHotels")
+	public List<Hotel> getHotels() {
+		return this.hotelRepository.findAll();
+	}
 
 }

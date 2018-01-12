@@ -1,5 +1,7 @@
 package pl.lichon.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import pl.lichon.bean.LoginData;
 import pl.lichon.bean.SessionManager;
+import pl.lichon.entity.Hotel;
 import pl.lichon.entity.User;
+import pl.lichon.repository.HotelRepository;
 import pl.lichon.repository.UserRepository;
 
 @Controller
@@ -21,6 +25,9 @@ public class LoginController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private HotelRepository hotelRepository;
 	
 	// user section
 	@GetMapping("/login")
@@ -61,5 +68,10 @@ public class LoginController {
 		HttpSession s = SessionManager.session();
 		s.invalidate();
 		return "redirect:/";
+	}
+	
+	@ModelAttribute("availableHotels")
+	public List<Hotel> getHotels() {
+		return this.hotelRepository.findAll();
 	}
 }
