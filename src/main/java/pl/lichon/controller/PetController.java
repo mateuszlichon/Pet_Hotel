@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.lichon.bean.SessionManager;
+import pl.lichon.entity.Hotel;
 import pl.lichon.entity.Pet;
 import pl.lichon.entity.ReservationDate;
 import pl.lichon.entity.User;
+import pl.lichon.repository.HotelRepository;
 import pl.lichon.repository.PetRepository;
 import pl.lichon.repository.ReservationDateRepository;
 
@@ -31,6 +33,9 @@ public class PetController {
 
 	@Autowired
 	private ReservationDateRepository reservationDateRepository;
+	
+	@Autowired
+	private HotelRepository hotelRepository;
 
 	@GetMapping("/register")
 	public String registerPer(Model m) {
@@ -83,6 +88,37 @@ public class PetController {
 		s.setAttribute("petDates", petDates);
 		return "pet/show_pet";
 	}
+	
+/*	@GetMapping("/edit/{petId}")
+	public String editPets(Model m, @PathVariable long petId) {
+		Pet pet = this.petRepository.findOne(petId);
+		HttpSession s = SessionManager.session();
+		List<ReservationDate> petDates = this.reservationDateRepository.findAllByPetId(petId);
+		s.setAttribute("pet", pet);
+		s.setAttribute("petDates", petDates);
+		return "pet/show_pet";
+	}*/
+	
+	@GetMapping("/edit")
+	public String changeUser(Model m) {
+		HttpSession s = SessionManager.session();
+		Pet p = (Pet) s.getAttribute("pet");
+		m.addAttribute("pet", p);
+		return "pet/edit_pet";
+	}
+	
+	@PostMapping("/edit")
+	public String changePost(@Valid @ModelAttribute Pet pet, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "pet/edit_pet";
+		}
+		HttpSession s = SessionManager.session();
+		Pet p = (Pet) s.getAttribute("pet");
+		pet.setId(p.getId());
+		pet.setUser(p.getUser());
+		this.petRepository.save(pet);
+		return "redirect:/";
+}
 
 	/*
 	 * @PostMapping("/show") public String showPetsPost(@ModelAttribute Pet pet1,
@@ -102,6 +138,11 @@ public class PetController {
 		HttpSession s = SessionManager.session();
 		User user = (User) s.getAttribute("user");
 		return user;
+	}
+	
+	@ModelAttribute("availableHotels")
+	public List<Hotel> getHotels() {
+		return this.hotelRepository.findAll();
 	}
 
 }

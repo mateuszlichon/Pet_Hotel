@@ -3,13 +3,16 @@ package pl.lichon.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.lichon.bean.SessionManager;
@@ -130,6 +133,29 @@ public class HotelController {
 		return "hotel/show_pet";
 	}
 	
+	//TODO - finalize edit function
+	@GetMapping("/edit")
+	public String changeUser(Model m) {
+		HttpSession s = SessionManager.session();
+		Hotel h = (Hotel) s.getAttribute("hotel");
+		m.addAttribute("hotel", h);
+		return "hotel/edit_hotel";
+	}
+	
+	@PostMapping("/edit")
+	public String changePost(@Valid @ModelAttribute Hotel hotel, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "hotel/edit_hotel";
+		}
+		HttpSession s = SessionManager.session();
+		Hotel h = (Hotel) s.getAttribute("hotel");
+		hotel.setId(h.getId());
+		hotel.setCapacity(h.getCapacity());
+		hotel.setCodedPassword(h.getPassword());
+		hotel.setReservationDate(h.getReservationDate());
+		this.hotelRepository.save(hotel);
+		return "redirect:/";
+}
 	
 	
 	@ModelAttribute("availableHotels")

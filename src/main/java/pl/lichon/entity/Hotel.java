@@ -78,6 +78,10 @@ public class Hotel {
 		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 	
+	public void setCodedPassword(String password) {
+		this.password = password;
+	}
+	
 	public boolean isPasswordCorrect(String pwd) {
 		return BCrypt.checkpw(pwd, this.password);
 	}

@@ -11,7 +11,7 @@
 <body>
 	<%@ include file = "../jspf/main_menu.jspf" %>
 	<h2 align="center">Welcome to Pet Hotel!</h2>
-	<%@ include file = "../jspf/register_pet_small.jspf" %>
+	<%@ include file = "../jspf/edit_hotel_small.jspf" %>
 
 
 			<%@ include file="../jspf/available_hotels.jspf"%>

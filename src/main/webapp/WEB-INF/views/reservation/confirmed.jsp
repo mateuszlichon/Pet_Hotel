@@ -15,14 +15,14 @@
 </head>
 <body>
 	<%@ include file="../jspf/main_menu.jspf"%>
-	<h2>Your reservation is confirmed :)</h2>
-<h3>${pet.name} will be spending ${datesNumber} days in ${hotel.name}</h3>
-Booked dates: <br>
+	<h2 align="center">Your reservation is confirmed :)</h2>
+<h3 align="center">${pet.name} will be spending ${datesNumber} days in ${hotel.name}</h3>
+<p align="center">Booked dates:</p> <br>
 <c:forEach items="${dates}" var="date">
-${date.day} ${date.month.name} ${date.year}<br>
+<p align="center">${date.day} ${date.month.name} ${date.year}</p><br>
 </c:forEach><br><br>
 
-In case of any further questions, please contact the hotel directly at: ${hotel.email}
+<p align="center">In case of any further questions, please contact the hotel directly at: ${hotel.email}</p>
 
 
 

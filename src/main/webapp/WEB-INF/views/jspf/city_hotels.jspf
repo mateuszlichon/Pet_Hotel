@@ -6,7 +6,7 @@
 
 <table class="table">
 	<thead class="thead-light">
-		<tr>
+		<tr align="center">
 			<th>Name</th>
 			<th>City</th>
 			<th>Description</th>
@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 	<c:forEach items="${cityHotels}" var="hotel">
-		<tr>
+		<tr align="center">
 			<td>${hotel.name}</td>
 			<td>${hotel.addressCity}</td>
 			<td>${hotel.description}</td>

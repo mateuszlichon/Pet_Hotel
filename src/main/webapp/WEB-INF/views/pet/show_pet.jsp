@@ -75,6 +75,8 @@
 						</tr>
 
 					</table>
+					<p align="right"><a href="/Pet_Hotel/pet/edit"><button
+								type="button" class="btn btn-default"><h1 align="right">Edit pet details</h1></button></a></p>
 					
 					<p align="center"><a href="/Pet_Hotel/reservationDate/${pet.id}/newPetReservation"><button
 								type="button" class="btn btn-warning"><h1 align="right">Make reservation</h1></button></a></p>

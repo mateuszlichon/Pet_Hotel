@@ -61,8 +61,8 @@
 						action="/Pet_Hotel/reservationDate/quickRegister">
 						Pet's name <input type="text" name="petName"></input>${petNameError}<BR />
 						Pet's category <input type="text" name="petCategory">${categoryError}</input><BR />
-						Your email <input type="text" name="email"></input>${mailError}<BR />
-						Your password (*optional if you want to be able to log in future)
+						Your email <input type="text" name="email"></input>${mailError}<BR /><BR />
+						Your password (*optional if you want to be able to log in future)<BR />
 						<input type="password" name="userPassword"></input><BR />
 						<input type="submit" />
 					</form></td>
