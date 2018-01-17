@@ -38,7 +38,6 @@ public class HomeController {
 		long tMonth = date.getMonth() + 1;
 		Calendar calendar = Calendar.getInstance();
 		int tDay = calendar.get(Calendar.DAY_OF_MONTH);
-//		int tMonth = calendar.get(Calendar.MONTH + 2);
 		s.setAttribute("tDay", tDay);
 		s.setAttribute("tMonth", tMonth);
 		return "home";

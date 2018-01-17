@@ -89,16 +89,6 @@ public class PetController {
 		return "pet/show_pet";
 	}
 	
-/*	@GetMapping("/edit/{petId}")
-	public String editPets(Model m, @PathVariable long petId) {
-		Pet pet = this.petRepository.findOne(petId);
-		HttpSession s = SessionManager.session();
-		List<ReservationDate> petDates = this.reservationDateRepository.findAllByPetId(petId);
-		s.setAttribute("pet", pet);
-		s.setAttribute("petDates", petDates);
-		return "pet/show_pet";
-	}*/
-	
 	@GetMapping("/edit")
 	public String changeUser(Model m) {
 		HttpSession s = SessionManager.session();
@@ -120,11 +110,6 @@ public class PetController {
 		return "redirect:/";
 }
 
-	/*
-	 * @PostMapping("/show") public String showPetsPost(@ModelAttribute Pet pet1,
-	 * Model m) { pet1 = this.petRepository.findOne(pet1.getId());
-	 * m.addAttribute("pet1", pet1); return "pet/show_pet"; }
-	 */
 
 	@ModelAttribute("userPets")
 	public List<Pet> getUserPets() {
