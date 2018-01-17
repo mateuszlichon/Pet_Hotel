@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import pl.lichon.entity.Month;
 import pl.lichon.entity.ReservationDate;
 
 public interface ReservationDateRepository extends JpaRepository<ReservationDate, Long> {
