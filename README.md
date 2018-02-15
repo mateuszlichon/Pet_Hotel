@@ -7,3 +7,9 @@ User can choose hotel and see what capacity there is for particular dates. User 
 * user can also choose hotel and dates and then select particualr pet
 
 Hotels can see how many pets are booked for particular days, can access details of particular pets and can hotel's capacity for particular dates.
+
+Next steps:
+- modify reservation system (current idea - base it on map of date and ReservationDate)
+- develop frontend
+- consider using REST
+- deployment on Heroku
